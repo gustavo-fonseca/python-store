@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+
+    store_backend:
+        container_name: store_backend
+        build:
+            context: .
+            args:
+                - ENV=${ENV}
+                - TIMEZONE=${TIMEZONE}
+        command: tail -f /dev/null
+        ports:
+            - 8000:8000
+        volumes:
+            - .:/app
+        networks:
+            - store_database_net
+
+    store_database:
+        container_name: store_database
+        image: postgres:12
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_DB: ${DATABASE_NAME}
+            POSTGRES_USER: ${DATABASE_USER}
+            POSTGRES_PASSWORD: ${DATABASE_PASS}
+            TZ: ${TIMEZONE}
+            PGTZ: ${TIMEZONE}
+        volumes:
+            - store_database_data:/var/lib/postgresql/data
+        networks:
+            - store_database_net
+        depends_on: 
+            - store_backend
+
+volumes:
+    store_database_data:
+
+networks:
+    store_database_net:
