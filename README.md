@@ -21,3 +21,58 @@ docker exec store_backend python manage.py loaddata initial.json
 docker exec -it store_backend python manage.py runserver 0:8000
 
 ```
+
+## Features
+
+### User
+- [x] List 
+- [x] Read 
+- [x] Create 
+- [x] Update 
+- [ ] Delete (Soft)
+- [x] Forget password (Send link to email)
+- [x] Reset password
+- [x] Login
+- [x] Token refresh
+- [ ] Test
+- [ ] Docs
+
+### ClientProfile
+- [x] List 
+- [x] Read 
+- [x] Create 
+- [x] Update 
+- [ ] Test
+- [ ] Docs
+
+### Client Address
+- [ ] List 
+- [ ] Read 
+- [ ] Create 
+- [ ] Update 
+- [ ] Delete (Soft)
+- [ ] Test
+- [ ] Docs
+
+### Products
+- [ ] List 
+- [ ] Read 
+- [ ] Create 
+- [ ] Update 
+- [ ] Delete (Soft)
+- [ ] Test
+- [ ] Docs
+
+### Order (Pedido)
+- [ ] List 
+- [ ] Read 
+- [ ] Create 
+- [ ] Update 
+- [ ] Close
+- [ ] Payment
+- [ ] Test
+- [ ] Docs
+
+### Payment Method
+- [ ] Pagseguro
+- [ ] Paypall
