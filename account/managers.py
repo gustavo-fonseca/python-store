@@ -1,4 +1,4 @@
-import uuid
+import uuid, datetime
 
 from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager
@@ -45,7 +45,7 @@ class CustomUserManager(BaseUserManager):
 
         if user:
             user.password_reset_token = uuid.uuid4()
-            user.password_reset_token_expiration_datetime = datetime.datetime.now() + datetime.timedelta(
+            user.password_reset_token_expiration_datetime = timezone.now() + datetime.timedelta(
                 hours=3
             )
             user.save()
