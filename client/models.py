@@ -36,12 +36,16 @@ class ClientProfile(models.Model):
         max_length=1,
         choices=constants.GENDER
     )
-    dt_birth = models.DateField(
-        "Birthday"
-    )
     cellphone = models.CharField(
         "Cellphone",
         max_length=16
+    )
+    date_birth = models.DateField(
+        "Birthday"
+    )
+    date_joined = models.DateTimeField(
+        "Date joined",
+        auto_now_add=True,
     )
 
     def __str__(self):

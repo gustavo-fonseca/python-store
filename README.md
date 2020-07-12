@@ -38,8 +38,9 @@ docker exec -it store_backend python manage.py runserver 0:8000
 
 ### User
 - [x] List 
-- [ ] List filter
-- [ ] List search
+- [x] List filter
+- [x] List search
+- [x] List ordering
 - [x] Read 
 - [x] Create 
 - [x] Update 
@@ -53,8 +54,9 @@ docker exec -it store_backend python manage.py runserver 0:8000
 
 ### ClientProfile
 - [x] List 
-- [ ] List filter
-- [ ] List search
+- [x] List filter
+- [x] List search
+- [x] List ordering
 - [x] Read 
 - [x] Create 
 - [x] Update 
@@ -65,6 +67,7 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [ ] List 
 - [ ] List filter
 - [ ] List search
+- [ ] List ordering
 - [ ] Read 
 - [ ] Create 
 - [ ] Update 
@@ -76,6 +79,8 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [ ] List 
 - [ ] List filter
 - [ ] List search
+- [ ] List ordering
+- [ ] List pagination
 - [ ] Read 
 - [ ] Create 
 - [ ] Update 

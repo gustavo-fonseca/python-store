@@ -4,3 +4,4 @@ python_decouple==3.3
 psycopg2-binary==2.8.5
 djangorestframework-jwt==1.11.0
 validate-docbr==1.7.0
+django-filter==2.3.0

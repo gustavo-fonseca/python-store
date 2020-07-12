@@ -16,7 +16,7 @@ class SignUpTests(APITestCase):
             "name": "Gustavo Fonseca",
             "cpf": "929.853.569-46",
             "gender": "M",
-            "dt_birth": "2000-01-01",
+            "date_birth": "2000-01-01",
             "cellphone": "(79) 98899-8899",
         }
 
@@ -41,7 +41,7 @@ class SignUpTests(APITestCase):
             "name": "",
             "cpf": "000.111.222-33",
             "gender": "X",
-            "dt_birth": "2010-00-00",
+            "date_birth": "2010-00-00",
             "cellphone": "(79) 9899-8899",
         }
 
@@ -52,6 +52,6 @@ class SignUpTests(APITestCase):
         self.assertIn("name", response.data)
         self.assertIn("cpf", response.data)
         self.assertIn("gender", response.data)
-        self.assertIn("dt_birth", response.data)
+        self.assertIn("date_birth", response.data)
         self.assertIn("cellphone", response.data)
 

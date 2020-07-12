@@ -32,10 +32,11 @@ class ClientProfileSerializer(serializers.ModelSerializer):
             "name",
             "cpf",
             "gender",
-            "dt_birth",
+            "date_birth",
+            "date_joined",
             "cellphone",
         ]
-        read_only_fields = ["id", "email", "cpf"]
+        read_only_fields = ["id", "email", "cpf", "date_joined"]
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -119,6 +120,6 @@ class SignUpSerializer(serializers.ModelSerializer):
             "name",
             "cpf",
             "gender",
-            "dt_birth",
+            "date_birth",
             "cellphone",
         ]

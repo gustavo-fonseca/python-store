@@ -15,6 +15,9 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     permission_classes = [permissions.IsAdminUser]
     serializer_class = UserSerializer
+    filterset_fields = ['is_active', 'is_superuser']
+    search_fields = ["^email"]
+    ordering_fields = ["email", "is_active", "is_superuser", "date_joined"]
 
     def perform_destroy(self, instance):
        instance.is_active = False

@@ -33,6 +33,9 @@ class ClientProfileViewSer(
     queryset = ClientProfile.objects.all()
     permission_classes = [IsOwner, permissions.IsAdminUser]
     serializer_class = ClientProfileSerializer
+    filterset_fields = ["name", "cpf", "gender", "date_birth", "cellphone", "date_joined"]
+    search_fields = ["^name", "^cpf"]
+    ordering_fields = ["name", "gender", "date_birth", "date_joined"]
 
     def get_queryset(self):
         if self.request.user.is_superuser:
@@ -65,8 +68,7 @@ class ClientProfileViewSer(
         TODO: Implement serializer to validate token and password
         """
         sucess = User.objects.reset_password(
-            request.data.get("token"),
-            request.data.get("password")
+            request.data.get("token"), request.data.get("password")
         )
         if sucess:
             return Response({"sucess": True}, status=status.HTTP_200_OK)
