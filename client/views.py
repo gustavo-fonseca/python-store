@@ -25,12 +25,8 @@ class SignUpViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = SignUpSerializer
 
 
-class ClientProfileViewSer(
-    mixins.ListModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
-    viewsets.GenericViewSet,
-):
+class ClientProfileViewSer(mixins.ListModelMixin, mixins.RetrieveModelMixin,
+                           mixins.UpdateModelMixin, viewsets.GenericViewSet):
     """
     TODO: docs
     """
@@ -102,5 +98,3 @@ class ClientAddressViewSet(viewsets.ModelViewSet):
         return ClientAddress.objects.filter(
             clientprofile=self.request.user.clients_profile.first()
         )
-
-# TRABALHANDO NO ADDRESS E USER - TESTAR NO POSTMAN
