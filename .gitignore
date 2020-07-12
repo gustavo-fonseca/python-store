@@ -128,3 +128,10 @@ dmypy.json
 
 # pytype static type analyzer
 .pytype/
+
+# migrations 
+*/migrations/0*.py
+
+# vscode
+.vscode
+.DS_Store

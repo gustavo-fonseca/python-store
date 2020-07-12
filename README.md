@@ -5,7 +5,7 @@
 ```bash
 
 # Clone de repository
-git clone https://github.com/gustavo-fonseca/pythonstore
+git clone https://github.com/gustavo-fonseca/python-store
 
 # Go to project`s folder and copy .env.example to .env
 cd /project-folder
