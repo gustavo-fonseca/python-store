@@ -1,5 +1,6 @@
-import uuid, datetime
+import uuid
 
+from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager
 from core.utils.email import Email
 
@@ -66,7 +67,7 @@ class CustomUserManager(BaseUserManager):
         TODO:
         """
         user = self.filter(password_reset_token=password_reset_token).first()
-        now = datetime.datetime.now()
+        now = timezone.now()
 
         if user and now < user.password_reset_token_expiration_datetime:
             user.password_reset_token = None
