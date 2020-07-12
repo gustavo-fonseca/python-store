@@ -1,5 +1,6 @@
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, permissions
+from rest_framework import viewsets, permissions, status
+from rest_framework.response import Response
 
 from account.serializers import UserSerializer
 
@@ -14,3 +15,8 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     permission_classes = [permissions.IsAdminUser]
     serializer_class = UserSerializer
+
+    def perform_destroy(self, instance):
+       instance.is_active = False
+       instance.save()
+       return Response(status=status.HTTP_204_NO_CONTENT)

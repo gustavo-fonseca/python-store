@@ -29,7 +29,7 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [x] Read 
 - [x] Create 
 - [x] Update 
-- [ ] Delete (Soft)
+- [x] Delete (Soft)
 - [x] Forget password (Send link to email)
 - [x] Reset password
 - [x] Login
