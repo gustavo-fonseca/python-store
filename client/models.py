@@ -10,6 +10,7 @@ User = get_user_model()
 
 class ClientProfile(models.Model):
     """
+    TODO:
     """
 
     id = models.UUIDField(
@@ -17,10 +18,10 @@ class ClientProfile(models.Model):
         default=uuid.uuid4,
         editable=False
     )
-    user = models.ForeignKey(
+    user = models.OneToOneField(
         User,
         verbose_name="User",
-        related_name="client_profile",
+        related_name="clients_profile",
         on_delete=models.CASCADE
     )
     name = models.CharField(
@@ -53,3 +54,67 @@ class ClientProfile(models.Model):
 
     class Meta:
         verbose_name = "Client's Profile"
+
+
+
+class ClientAddress(models.Model):
+    """
+    TODO:
+    """
+    id = models.UUIDField(
+        primary_key=True,
+        default=uuid.uuid4,
+        editable=False
+    )
+    clientprofile = models.ForeignKey(
+        ClientProfile,
+        related_name="address",
+        on_delete=models.CASCADE
+    )
+    main = models.BooleanField(
+        "Main address",
+        default=True
+    )
+    name = models.CharField(
+        "Name",
+        max_length=150,
+        help_text="Example: Grandma's House"
+    )
+    postal_code = models.CharField(
+        "Postal Code",
+        max_length=9,
+    )
+    address = models.CharField(
+        "Address",
+        max_length=250,
+    )
+    district = models.CharField(
+        "District",
+        max_length=250,
+    )
+    number = models.CharField(
+        "Number",
+        max_length=11,
+        help_text="If not, type SN.",
+    )
+    city = models.CharField(
+        "City",
+        max_length=250,
+    )
+    state = models.CharField(
+        "State",
+        max_length=2,
+        choices=constants.BRASIL_STATES_UF,
+    )
+    complement = models.CharField(
+        "Complement",
+        max_length=250,
+        null=True,
+        blank=True
+    )
+    landmark = models.CharField(
+        "Landmark",
+        max_length=250,
+        null=True,
+        blank=True
+    )

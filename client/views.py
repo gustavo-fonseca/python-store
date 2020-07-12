@@ -3,9 +3,14 @@ from rest_framework import viewsets, permissions, mixins, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from account.permissions import IsOwner
-from client.serializers import SignUpSerializer, ClientProfileSerializer
-from client.models import ClientProfile
+from account.permissions import IsUserOwner
+from client.permissions import IsClientProfileOwner
+from client.serializers import (
+    SignUpSerializer,
+    ClientProfileSerializer,
+    ClientAddressSerializer,
+)
+from client.models import ClientProfile, ClientAddress
 
 User = get_user_model()
 
@@ -31,9 +36,16 @@ class ClientProfileViewSer(
     """
 
     queryset = ClientProfile.objects.all()
-    permission_classes = [IsOwner, permissions.IsAdminUser]
+    permission_classes = [IsUserOwner]
     serializer_class = ClientProfileSerializer
-    filterset_fields = ["name", "cpf", "gender", "date_birth", "cellphone", "date_joined"]
+    filterset_fields = [
+        "name",
+        "cpf",
+        "gender",
+        "date_birth",
+        "cellphone",
+        "date_joined",
+    ]
     search_fields = ["^name", "^cpf"]
     ordering_fields = ["name", "gender", "date_birth", "date_joined"]
 
@@ -73,3 +85,22 @@ class ClientProfileViewSer(
         if sucess:
             return Response({"sucess": True}, status=status.HTTP_200_OK)
         return Response({"sucess": False}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ClientAddressViewSet(viewsets.ModelViewSet):
+    """
+    TODO:
+    """
+
+    queryset = ClientAddress.objects.all()
+    permission_classes = [IsClientProfileOwner]
+    serializer_class = ClientAddressSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_superuser:
+            return ClientAddress.objects.all()
+        return ClientAddress.objects.filter(
+            clientprofile=self.request.user.clients_profile.first()
+        )
+
+# TRABALHANDO NO ADDRESS E USER - TESTAR NO POSTMAN

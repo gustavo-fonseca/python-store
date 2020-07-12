@@ -3,7 +3,7 @@ from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
 from core import validators
-from client.models import ClientProfile
+from client.models import ClientProfile, ClientAddress
 
 User = get_user_model()
 
@@ -123,3 +123,27 @@ class SignUpSerializer(serializers.ModelSerializer):
             "date_birth",
             "cellphone",
         ]
+
+
+class ClientAddressSerializer(serializers.ModelSerializer):
+    """
+    TODO:
+    """
+
+    class Meta:
+        model = ClientAddress
+        fields = [
+            "id",
+            "clientprofile",
+            "main",
+            "name",
+            "postal_code",
+            "address",
+            "district",
+            "number",
+            "city",
+            "state",
+            "complement",
+            "landmark",
+        ]
+        read_only_fields = ["id", "clientprofile"]
