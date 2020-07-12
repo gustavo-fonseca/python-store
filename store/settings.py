@@ -147,5 +147,14 @@ JWT_AUTH = {
 APPEND_SLASH = True
 
 
+# For email purpose
+FRONTEND_URL = "https://store.com"
+
 # Email settings
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=False, cast=bool)
+EMAIL_HOST = config("EMAIL_HOST", cast=str)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str)
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str)
+EMAIL_PORT = config("EMAIL_PORT", cast=str)
