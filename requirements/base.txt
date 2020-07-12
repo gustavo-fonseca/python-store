@@ -2,3 +2,4 @@ Django==3.0.8
 djangorestframework==3.11.0
 python_decouple==3.3
 psycopg2-binary==2.8.5
+djangorestframework-jwt==1.11.0
