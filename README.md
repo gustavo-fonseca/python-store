@@ -27,10 +27,11 @@ EMAIL_PORT=587
 # Or use email backend console for dev mode in settings.py file (Only if the email credentials were not provided)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
+# Running tests
+docker exec -it store_backend python manage.py test
+
 # Running in development mode
 docker exec -it store_backend python manage.py runserver 0:8000
-
-
 ```
 
 ## Features
