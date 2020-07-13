@@ -40,6 +40,7 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
         methods=["post"],
         detail=False,
         url_path="forget-password",
+        url_name="forget-password",
         permission_classes=[permissions.AllowAny],
     )
     def forget_password(self, request):
@@ -53,6 +54,7 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
         methods=["post"],
         detail=False,
         url_path="reset-password",
+        url_name="reset-password",
         permission_classes=[permissions.AllowAny],
     )
     def reset_password(self, request):
