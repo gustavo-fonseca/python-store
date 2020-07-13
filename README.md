@@ -41,6 +41,8 @@ docker stack deploy -c <(docker-compose -f docker-compose-swarm.yml) store
 
 ## Features
 
+All API Store features
+
 ### User
 - [x] List 
 - [x] List (filter, search, ordering)
@@ -134,8 +136,11 @@ docker stack deploy -c <(docker-compose -f docker-compose-swarm.yml) store
 - [ ] Tracking application error (Sentry)
 
 ### Payment Method
-- [ ] Pagseguro
-- [ ] Paypall
+- [ ] PagSeguro
+- [ ] PayPall
 
 ### CI/CD
 - [ ] Drone CI
+
+### Media/Static files storage
+- [ ] AWS S3

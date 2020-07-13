@@ -20,7 +20,7 @@ urlpatterns = [
     path("", include(router.urls)),
     path("api-auth", include("rest_framework.urls")),
     # auth token urls
-    path("login", obtain_jwt_token),
-    path("token-refresh", refresh_jwt_token),
-    path("token-verify", verify_jwt_token),
+    path("login", obtain_jwt_token, name="login"),
+    path("token-refresh", refresh_jwt_token, name="token-refresh"),
+    path("token-verify", verify_jwt_token, name="token-verify"),
 ]
