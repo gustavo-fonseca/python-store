@@ -90,11 +90,6 @@ class Product(models.Model):
     """
     The product to sale
     """
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
     brand = models.ForeignKey(
         Brand,
         verbose_name="Brand",
@@ -110,7 +105,9 @@ class Product(models.Model):
     slug = models.SlugField(
         "URL slug",
         max_length=250,
-        unique=True
+        unique=True,
+        null=True,
+        blank=True
     )
     name = models.CharField(
         "Name",

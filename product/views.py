@@ -3,8 +3,9 @@ from rest_framework import viewsets, permissions, mixins, status
 from rest_framework.response import Response
 
 from core.permissions import IsAdminUserOrReadOnly
-from product.models import Brand, Category, Image
-from product.serializers import BrandSerializer, CategorySerializer, ImageSerializer
+from product.models import Brand, Category, Image, Product
+from product.serializers import BrandSerializer, CategorySerializer, \
+     ImageSerializer, ProductSerializer
 
 User = get_user_model()
 
@@ -67,3 +68,22 @@ class ImageViewSet(viewsets.ModelViewSet):
         instance.is_active = False
         instance.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class ProductViewSet(viewsets.ModelViewSet):
+    """
+    TODO: docs
+    """
+
+    queryset = Product.objects.all()
+    permission_classes = [IsAdminUserOrReadOnly]
+    serializer_class = ProductSerializer
+
+    def get_queryset(self):
+        return Product.objects.filter(is_active=True)
+
+    def perform_destroy(self, instance):
+        instance.is_active = False
+        instance.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+

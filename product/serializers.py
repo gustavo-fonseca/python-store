@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from product.models import Brand, Category, Image
+from product.models import Brand, Category, Image, Product
 
 User = get_user_model()
 
@@ -37,3 +37,32 @@ class ImageSerializer(serializers.ModelSerializer):
         model = Image
         fields = ["id", "file", "is_active"]
         read_only_fields = ["id"]
+
+
+class ProductSerializer(serializers.ModelSerializer):
+    """
+    TODO:
+    """
+
+    class Meta:
+        model = Product
+        fields = [
+            "id",
+            "brand",
+            "categories",
+            "slug",
+            "name",
+            "is_active",
+            "short_description",
+            "full_description",
+            "color_hex",
+            "price",
+            "old_price",
+            "cost_price",
+            "inventory",
+            "weight_grams",
+            "length_mm",
+            "width_mm",
+            "thickness_mm",
+        ]
+        read_only_fields = ["id", "slug"]
