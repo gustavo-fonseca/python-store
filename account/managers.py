@@ -5,7 +5,7 @@ from django.contrib.auth.base_user import BaseUserManager
 from core.utils.email import Email
 
 
-class CustomUserManager(BaseUserManager):
+class UserManager(BaseUserManager):
     """
     Custom user model manager where email is the unique identifiers
     for authentication instead of usernames.
@@ -39,32 +39,36 @@ class CustomUserManager(BaseUserManager):
 
     def forget_password(self, email):
         """
-        Send an email with a link to resent password
+        Create a password_reset_token in the user who has the given email,
+        than send an email with the password_reset_token.
+        The token expires in 3 hours
         """
-        user = self.filter(email=email).first()
+        user = self.filter(email=email)
 
-        if user:
-            user.password_reset_token = uuid.uuid4()
-            user.password_reset_token_expiration_datetime = timezone.now() + datetime.timedelta(
-                hours=3
+        if user.count():
+            exp_datetime = timezone.now() + datetime.timedelta(hours=3)
+            token = uuid.uuid4()
+
+            user.update(
+                password_reset_token=uuid.uuid4(),
+                password_reset_token_expiration_datetime=exp_datetime
             )
-            user.save()
 
             email = Email(
-                subject="Home Store - Forgotten Password?",
-                from_name="Home Store",
+                subject="API Store - Forgotten Password?",
+                from_name="API Store",
                 from_email="contato@gustavofonseca.com.br",
                 to_name="",
                 to_email=email,
                 template_path="email/forget-password.html",
-                template_context={"token": user.password_reset_token},
+                template_context={"token": token},
             )
-
             email.send()
 
     def reset_password(self, password_reset_token, new_raw_password):
         """
-        TODO:
+        Alter user's password with the given new_raw_password
+        Also check if the password_reset_token isn't outdated
         """
         user = self.filter(password_reset_token=password_reset_token).first()
         now = timezone.now()

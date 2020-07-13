@@ -49,8 +49,8 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [x] Login
 - [x] Token refresh
 - [x] Token verify
-- [ ] Test
-- [ ] Docs
+- [x] Test
+- [x] Docs
 
 ### Client's Profile
 - [x] List 

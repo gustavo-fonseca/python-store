@@ -14,8 +14,10 @@ import os, datetime
 
 from decouple import config, Csv
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+# Settings dir folder
 SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# Project's root folder
 BASE_DIR = os.path.dirname(SETTINGS_DIR)
 
 
@@ -23,7 +25,7 @@ BASE_DIR = os.path.dirname(SETTINGS_DIR)
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("DEBUG", cast=str)
+SECRET_KEY = config("SECRET_KEY", cast=str)
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG", default=False, cast=bool)
@@ -32,7 +34,6 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
 
 # Application definition
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -168,7 +169,7 @@ APPEND_SLASH = True
 
 
 # For email purpose
-FRONTEND_URL = "https://store.com"
+FRONTEND_URL = config("FRONTEND_URL", cast=str)
 
 # Email settings
 # EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"

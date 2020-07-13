@@ -3,7 +3,7 @@ import uuid
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-from account.managers import CustomUserManager
+from account.managers import UserManager
 
 
 class User(AbstractUser):
@@ -42,9 +42,7 @@ class User(AbstractUser):
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 
-    objects = CustomUserManager()
+    objects = UserManager()
 
     def __str__(self):
         return self.email
-
-

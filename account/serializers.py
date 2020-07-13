@@ -5,10 +5,6 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
-    """
-    TODO: docs
-    """
-
     def get_fields(self, *args, **kwargs):
         """
         Make password field required only for PUT and PATCH http methods

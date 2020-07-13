@@ -10,7 +10,7 @@ User = get_user_model()
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    TODO: docs
+    Implements the full CRUD for user model
     """
 
     queryset = User.objects.all()
@@ -23,7 +23,7 @@ class UserViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_superuser:
             return User.objects.all()
-        return User.objects.filter(id=self.request.userid)
+        return User.objects.filter(id=self.request.user.id)
 
     def perform_destroy(self, instance):
         instance.is_active = False
@@ -31,10 +31,11 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-
 class PasswordRecoverViewSet(viewsets.GenericViewSet):
     """
+    Implements forget password actions
     """
+
     @action(
         methods=["post"],
         detail=False,
@@ -58,7 +59,7 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
     def reset_password(self, request):
         """
         Resets the forgotten password with user.password_reset_token
-        TODO: Implement serializer to validate token and password
+        TODO: Implement serializer to validate password
         """
         sucess = User.objects.reset_password(
             request.data.get("token"), request.data.get("password")

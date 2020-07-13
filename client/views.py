@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import viewsets, permissions, mixins, status
 from rest_framework.response import Response
 
-from account.permissions import IsUserOwner
+from account.permissions import IsUserOwnerAdmin
 from client.permissions import IsClientProfileOwner
 from client.serializers import (
     SignUpSerializer,
@@ -31,7 +31,7 @@ class ClientProfileViewSer(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     """
 
     queryset = ClientProfile.objects.all()
-    permission_classes = [IsUserOwner]
+    permission_classes = [IsUserOwnerAdmin]
     serializer_class = ClientProfileSerializer
     filterset_fields = [
         "name",
