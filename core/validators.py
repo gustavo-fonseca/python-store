@@ -15,3 +15,11 @@ def CPF_validate(value: str) -> bool:
     It also check the CPF DV
     """
     return CPF().validate(value)
+
+
+def brasil_postal_code_validate(value: str) -> bool:
+    """
+    Validate postal code with format: 49000-000
+    """
+    return re.match(r"^[0-9]{5}-[0-9]{3}$", value)
+

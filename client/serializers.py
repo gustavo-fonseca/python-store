@@ -1,6 +1,7 @@
 from django.contrib.auth import get_user_model, password_validation
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+from rest_framework.fields import CurrentUserDefault
 
 from core import validators
 from client.models import ClientProfile, ClientAddress
@@ -130,11 +131,21 @@ class ClientAddressSerializer(serializers.ModelSerializer):
     TODO:
     """
 
+    def validate_postal_code(self, value):
+        """
+        Checking if cellphone is in the right format
+        """
+        if not validators.brasil_postal_code_validate(value):
+            raise serializers.ValidationError(
+                "Postal Code has wrong format. Use this format instead: 00000-000"
+            )
+        return value
+
     class Meta:
         model = ClientAddress
         fields = [
             "id",
-            "clientprofile",
+            "client_profile",
             "main",
             "name",
             "postal_code",
@@ -146,4 +157,4 @@ class ClientAddressSerializer(serializers.ModelSerializer):
             "complement",
             "landmark",
         ]
-        read_only_fields = ["id", "clientprofile"]
+        read_only_fields = ["id", "client_profile"]

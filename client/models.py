@@ -21,7 +21,7 @@ class ClientProfile(models.Model):
     user = models.OneToOneField(
         User,
         verbose_name="User",
-        related_name="clients_profile",
+        related_name="client_profile",
         on_delete=models.CASCADE
     )
     name = models.CharField(
@@ -48,6 +48,7 @@ class ClientProfile(models.Model):
         "Date joined",
         auto_now_add=True,
     )
+    
 
     def __str__(self):
         return self.name
@@ -66,7 +67,7 @@ class ClientAddress(models.Model):
         default=uuid.uuid4,
         editable=False
     )
-    clientprofile = models.ForeignKey(
+    client_profile = models.ForeignKey(
         ClientProfile,
         related_name="address",
         on_delete=models.CASCADE
@@ -118,3 +119,35 @@ class ClientAddress(models.Model):
         null=True,
         blank=True
     )
+    date_created = models.DateTimeField(
+        "Date created",
+        auto_now_add=True,
+    )
+    is_deleted = models.BooleanField(
+        "Deleted",
+        default=False
+    )
+
+    def __str__(self):
+        return self.name
+
+    def save(self, *args, **kwargs):
+        """
+        Compute the main address
+        """
+        main_address = ClientAddress.objects.filter(
+            main=True,
+            client_profile=self.client_profile
+        )
+        # make sure that just one address will be main
+        if self.main:
+            main_address.update(main=False)
+        
+        # If there isn't a main address force the current created/updated to be the main
+        if not main_address.count():
+            self.main = True
+        super(ClientAddress, self).save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "Client's Address"
+        verbose_name_plural = "Client's Address"

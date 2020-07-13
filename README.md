@@ -49,6 +49,7 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [x] Reset password
 - [x] Login
 - [x] Token refresh
+- [x] Token verify
 - [ ] Test
 - [ ] Docs
 
@@ -58,20 +59,21 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [x] List search
 - [x] List ordering
 - [x] Read 
-- [x] Create 
+- [x] Create (signup)
+- [ ] Create (signup) - Send a email to verify the account 
 - [x] Update 
 - [ ] Test
 - [ ] Docs
 
 ### Client Address
-- [ ] List 
-- [ ] List filter
-- [ ] List search
-- [ ] List ordering
-- [ ] Read 
-- [ ] Create 
-- [ ] Update 
-- [ ] Delete (Soft)
+- [x] List 
+- [x] List filter
+- [x] List search
+- [x] List ordering
+- [x] Read 
+- [x] Create 
+- [x] Update 
+- [x] Delete (Soft)
 - [ ] Test
 - [ ] Docs
 

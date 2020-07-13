@@ -58,10 +58,22 @@ class ClientAddressViewSet(viewsets.ModelViewSet):
     queryset = ClientAddress.objects.all()
     permission_classes = [IsClientProfileOwner]
     serializer_class = ClientAddressSerializer
+    filterset_fields = ["name", "postal_code", "district", "city", "state", "main"]
+    search_fields = ["^name", "^postal_code", "^district", "^city", "state"]
+    ordering_fields = ["district", "city", "state", "main"]
 
     def get_queryset(self):
         if self.request.user.is_superuser:
-            return ClientAddress.objects.all()
+            return ClientAddress.objects.filter(is_deleted=False)
         return ClientAddress.objects.filter(
-            clientprofile=self.request.user.clients_profile.first()
+            is_deleted=False,
+            client_profile=self.request.user.client_profile
         )
+
+    def perform_create(self, serializer):
+        serializer.save(client_profile=self.request.user.client_profile)
+    
+    def perform_destroy(self, instance):
+        instance.is_deleted = True
+        instance.save()
+        return Response(status=status.HTTP_204_NO_CONTENT)
