@@ -114,11 +114,19 @@ class UserAPITests(APITestCase):
 
         # reset password test
         payload = {
-            "password": "123",
+            "password": "week",
             "token": regular_user.password_reset_token,
         }
         response = self.client.post("/reset-password", payload, format="json")
-        regular_user.refresh_from_db()
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+
+        payload = {
+            "password": "AER123$123",
+            "token": regular_user.password_reset_token,
+        }
+        response = self.client.post("/reset-password", payload, format="json")
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        regular_user.refresh_from_db()
         self.assertIsNone(regular_user.password_reset_token)
         self.assertIsNone(regular_user.password_reset_token_expiration_datetime)

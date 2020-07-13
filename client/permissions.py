@@ -7,5 +7,3 @@ class IsClientProfileOwner(permissions.BasePermission):
     """
     def has_object_permission(self, request, view, obj):
         return request.user and obj.client_profile == request.user.client_profile
-
-

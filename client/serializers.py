@@ -10,8 +10,6 @@ User = get_user_model()
 
 
 class ClientProfileSerializer(serializers.ModelSerializer):
-    """
-    """
 
     email = serializers.ReadOnlyField(source="user.email")
 
@@ -38,6 +36,38 @@ class ClientProfileSerializer(serializers.ModelSerializer):
             "cellphone",
         ]
         read_only_fields = ["id", "email", "cpf", "date_joined"]
+
+
+class ClientAddressSerializer(serializers.ModelSerializer):
+
+    def validate_postal_code(self, value):
+        """
+        Checking if cellphone is in the right format
+        """
+        if not validators.brasil_postal_code_validate(value):
+            raise serializers.ValidationError(
+                "Postal Code has wrong format. Use this format instead: 00000-000"
+            )
+        return value
+
+    class Meta:
+        model = ClientAddress
+        fields = [
+            "id",
+            "client_profile",
+            "main",
+            "name",
+            "postal_code",
+            "address",
+            "district",
+            "number",
+            "city",
+            "state",
+            "complement",
+            "landmark",
+            "date_updated"
+        ]
+        read_only_fields = ["id", "client_profile", "date_updated"]
 
 
 class SignUpSerializer(serializers.ModelSerializer):
@@ -125,36 +155,3 @@ class SignUpSerializer(serializers.ModelSerializer):
             "cellphone",
         ]
 
-
-class ClientAddressSerializer(serializers.ModelSerializer):
-    """
-    TODO:
-    """
-
-    def validate_postal_code(self, value):
-        """
-        Checking if cellphone is in the right format
-        """
-        if not validators.brasil_postal_code_validate(value):
-            raise serializers.ValidationError(
-                "Postal Code has wrong format. Use this format instead: 00000-000"
-            )
-        return value
-
-    class Meta:
-        model = ClientAddress
-        fields = [
-            "id",
-            "client_profile",
-            "main",
-            "name",
-            "postal_code",
-            "address",
-            "district",
-            "number",
-            "city",
-            "state",
-            "complement",
-            "landmark",
-        ]
-        read_only_fields = ["id", "client_profile"]

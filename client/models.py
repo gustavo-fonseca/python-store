@@ -10,7 +10,7 @@ User = get_user_model()
 
 class ClientProfile(models.Model):
     """
-    TODO:
+    Client's profile model
     """
 
     id = models.UUIDField(
@@ -60,7 +60,7 @@ class ClientProfile(models.Model):
 
 class ClientAddress(models.Model):
     """
-    TODO:
+    Client's address model
     """
     id = models.UUIDField(
         primary_key=True,
@@ -91,16 +91,16 @@ class ClientAddress(models.Model):
     )
     district = models.CharField(
         "District",
-        max_length=250,
+        max_length=150,
     )
     number = models.CharField(
         "Number",
-        max_length=11,
+        max_length=8,
         help_text="If not, type SN.",
     )
     city = models.CharField(
         "City",
-        max_length=250,
+        max_length=100,
     )
     state = models.CharField(
         "State",
@@ -109,13 +109,13 @@ class ClientAddress(models.Model):
     )
     complement = models.CharField(
         "Complement",
-        max_length=250,
+        max_length=100,
         null=True,
         blank=True
     )
     landmark = models.CharField(
         "Landmark",
-        max_length=250,
+        max_length=100,
         null=True,
         blank=True
     )
@@ -123,9 +123,17 @@ class ClientAddress(models.Model):
         "Date created",
         auto_now_add=True,
     )
+    date_updated = models.DateTimeField(
+        "Date updated",
+        auto_now=True
+    )
     is_deleted = models.BooleanField(
         "Deleted",
         default=False
+    )
+    date_deleted = models.DateTimeField(
+        "Date deleted",
+        null=True
     )
 
     def __str__(self):

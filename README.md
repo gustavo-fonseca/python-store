@@ -57,10 +57,9 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [x] List (filter, search, ordering)
 - [x] Read 
 - [x] Create (signup)
-- [ ] Create (signup) - Send a email to verify the account 
 - [x] Update 
-- [ ] Test
-- [ ] Docs
+- [x] Test
+- [x] Docs
 
 ### Client's Address
 - [x] List 
@@ -69,8 +68,8 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [x] Create 
 - [x] Update 
 - [x] Delete (Soft)
-- [ ] Test
-- [ ] Docs
+- [x] Test
+- [x] Docs
 
 ### Product's Brand
 - [x] List 
@@ -128,6 +127,7 @@ docker exec -it store_backend python manage.py runserver 0:8000
 
 ### Audit
 - [ ] Tracking user activity (ELK)
+- [ ] Tracking application error (Sentry)
 
 ### Payment Method
 - [ ] Pagseguro
