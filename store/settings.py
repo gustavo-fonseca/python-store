@@ -15,7 +15,8 @@ import os, datetime
 from decouple import config, Csv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SETTINGS_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(SETTINGS_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -126,6 +127,11 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
 STATIC_URL = "/static/"
+STATIC_ROOT = os.path.join(SETTINGS_DIR, "static_files")
+
+MEDIA_URL = "/media/"
+MEDIA_ROOT = os.path.join(SETTINGS_DIR, "media")
+
 
 # Custom User
 AUTH_USER_MODEL = "account.User"

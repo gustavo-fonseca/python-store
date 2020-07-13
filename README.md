@@ -83,22 +83,21 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [ ] Docs
 
 ### Product's Category
-- [ ] List 
-- [ ] List (filter, search, ordering)
-- [ ] Read 
-- [ ] Create 
-- [ ] Update 
-- [ ] Delete (Soft)
+- [x] List 
+- [x] List (filter, search, ordering)
+- [x] Read 
+- [x] Create 
+- [x] Update 
+- [x] Delete (Soft)
 - [ ] Test
 - [ ] Docs
 
 ### Product's Image
-- [ ] List 
-- [ ] List (filter, search, ordering)
-- [ ] Read 
-- [ ] Create 
-- [ ] Update 
-- [ ] Delete (Soft)
+- [x] List 
+- [x] Read 
+- [x] Create 
+- [x] Update 
+- [x] Delete (Soft)
 - [ ] Test
 - [ ] Docs
 
