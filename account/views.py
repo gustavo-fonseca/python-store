@@ -1,4 +1,4 @@
-from django.contrib.auth import get_user_model
+from django.contrib.auth import get_user_model, password_validation
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -45,7 +45,6 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
     def forget_password(self, request):
         """
         Send an email with a link to resent password
-        TODO: Implement serializer to validate email
         """
         User.objects.forget_password(request.data.get("email"))
         return Response({"sucess": True}, status=status.HTTP_200_OK)
@@ -59,11 +58,15 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
     def reset_password(self, request):
         """
         Resets the forgotten password with user.password_reset_token
-        TODO: Implement serializer to validate password
         """
-        sucess = User.objects.reset_password(
+        try:
+            password_validation.validate_password(request.data.get("password"))
+        except Exception as e:
+            return Response({"password": e}, status=status.HTTP_400_BAD_REQUEST)
+
+        reset_sucess = User.objects.reset_password(
             request.data.get("token"), request.data.get("password")
         )
-        if sucess:
-            return Response({"sucess": True}, status=status.HTTP_200_OK)
-        return Response({"sucess": False}, status=status.HTTP_400_BAD_REQUEST)
+        if reset_sucess:
+            return Response(status=status.HTTP_200_OK)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
