@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import viewsets, permissions, mixins, status
 from rest_framework.response import Response
 
-from core.permissions import IsAdminUserOrReadOnly
+from account.permissions import IsAdminUserOrReadOnly
 from product.models import Brand, Category, Image, Product
 from product.serializers import BrandSerializer, CategorySerializer, \
      ImageSerializer, ProductSerializer

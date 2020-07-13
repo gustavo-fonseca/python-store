@@ -6,7 +6,9 @@ def cellphone_validate(value: str) -> bool:
     """
     Validate cellphone with format: (00) 91111-1111
     """
-    return re.match(r"^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$", value)
+    if re.match(r"^\([1-9]{2}\) (?:[2-8]|9[1-9])[0-9]{3}\-[0-9]{4}$", value):
+        return True
+    return False
 
 
 def CPF_validate(value: str) -> bool:
@@ -21,5 +23,7 @@ def brasil_postal_code_validate(value: str) -> bool:
     """
     Validate postal code with format: 49000-000
     """
-    return re.match(r"^[0-9]{5}-[0-9]{3}$", value)
+    if re.match(r"^[0-9]{5}-[0-9]{3}$", value):
+        return True
+    return False
 
