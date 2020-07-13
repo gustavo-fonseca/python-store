@@ -24,11 +24,12 @@ EMAIL_HOST_USER=apikey
 EMAIL_HOST_PASSWORD=YOURKEY
 EMAIL_PORT=587
 
-# Or use email backend console for dev mode in settings.py file (Only if the email credentials were not provided)
+# Or use email backend console for dev mode in settings.py file
+# (Only if the email credentials were not provided)
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Running tests
-docker exec -it store_backend python manage.py test
+docker exec store_backend python manage.py test
 
 # Running in development mode
 docker exec -it store_backend python manage.py runserver 0:8000
@@ -38,9 +39,7 @@ docker exec -it store_backend python manage.py runserver 0:8000
 
 ### User
 - [x] List 
-- [x] List filter
-- [x] List search
-- [x] List ordering
+- [x] List (filter, search, ordering)
 - [x] Read 
 - [x] Create 
 - [x] Update 
@@ -53,11 +52,9 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [ ] Test
 - [ ] Docs
 
-### ClientProfile
+### Client's Profile
 - [x] List 
-- [x] List filter
-- [x] List search
-- [x] List ordering
+- [x] List (filter, search, ordering)
 - [x] Read 
 - [x] Create (signup)
 - [ ] Create (signup) - Send a email to verify the account 
@@ -65,11 +62,9 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [ ] Test
 - [ ] Docs
 
-### Client Address
+### Client's Address
 - [x] List 
-- [x] List filter
-- [x] List search
-- [x] List ordering
+- [x] List (filter, search, ordering)
 - [x] Read 
 - [x] Create 
 - [x] Update 
@@ -77,11 +72,39 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [ ] Test
 - [ ] Docs
 
-### Products
+### Product's Brand
+- [x] List 
+- [x] List (filter, search, ordering)
+- [x] Read 
+- [x] Create 
+- [x] Update 
+- [x] Delete (Soft)
+- [ ] Test
+- [ ] Docs
+
+### Product's Category
 - [ ] List 
-- [ ] List filter
-- [ ] List search
-- [ ] List ordering
+- [ ] List (filter, search, ordering)
+- [ ] Read 
+- [ ] Create 
+- [ ] Update 
+- [ ] Delete (Soft)
+- [ ] Test
+- [ ] Docs
+
+### Product's Image
+- [ ] List 
+- [ ] List (filter, search, ordering)
+- [ ] Read 
+- [ ] Create 
+- [ ] Update 
+- [ ] Delete (Soft)
+- [ ] Test
+- [ ] Docs
+
+### Product
+- [ ] List 
+- [ ] List (filter, search, ordering)
 - [ ] List pagination
 - [ ] Read 
 - [ ] Create 
@@ -92,8 +115,7 @@ docker exec -it store_backend python manage.py runserver 0:8000
 
 ### Order (Pedido)
 - [ ] List 
-- [ ] List filter
-- [ ] List search
+- [ ] List (filter, search, ordering)
 - [ ] Read 
 - [ ] Create 
 - [ ] Update 
@@ -102,6 +124,15 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [ ] Test
 - [ ] Docs
 
+### Email Queue
+- [ ] Redis queue to send email
+
+### Audit
+- [ ] Tracking user activity (ELK)
+
 ### Payment Method
 - [ ] Pagseguro
 - [ ] Paypall
+
+### CI/CD
+- [ ] Drone CI

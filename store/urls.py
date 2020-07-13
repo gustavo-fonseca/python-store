@@ -5,10 +5,12 @@ from rest_framework_jwt.views import obtain_jwt_token, refresh_jwt_token, verify
 
 from account.urls import users_router
 from client.urls import clients_router
+from product.urls import products_router
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.registry.extend(users_router.registry)
 router.registry.extend(clients_router.registry)
+router.registry.extend(products_router.registry)
 
 urlpatterns = [
     # api router urls
