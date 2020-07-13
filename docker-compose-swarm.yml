@@ -1,0 +1,66 @@
+version: "3.8"
+
+services:
+    nginx:
+        image: gustavofonseca/nginx-wait-for:1.0
+        ports:
+            - 80:80
+        volumes:
+            - ./nginx.conf:/etc/nginx/conf.d/default.conf
+            - ./store/media:/media
+            - ./store/static_files:/static
+        environment:
+            - WAIT_FOR=store_backend:8000
+            - WAIT_FOR_TIMEOUT=15
+        networks:
+            - nginx_proxy
+        depends_on:
+            - store_backend
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 11s
+
+    store_backend:
+        image: gustavofonseca/python-store:0.1
+        command: bash -c "python manage.py makemigrations && 
+                          python manage.py migrate &&
+                          python manage.py collectstatic --noinput &&
+                          gunicorn store.wsgi:application -b 0:8000"
+        volumes:
+            - .:/app
+        networks:
+            - store_database_net
+            - nginx_proxy
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 11s
+
+    store_database:
+        image: postgres:12
+        ports:
+            - 5432:5432
+        environment:
+            POSTGRES_DB: ${DATABASE_NAME}
+            POSTGRES_USER: ${DATABASE_USER}
+            POSTGRES_PASSWORD: ${DATABASE_PASS}
+            TZ: ${TIMEZONE}
+            PGTZ: ${TIMEZONE}
+        volumes:
+            - store_database_data:/var/lib/postgresql/data
+        networks:
+            - store_database_net
+        depends_on: 
+            - store_backend
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 11s
+
+volumes:
+    store_database_data:
+
+networks:
+    store_database_net:
+    nginx_proxy:

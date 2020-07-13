@@ -1,6 +1,6 @@
 # A Python and Django Store API Example
 
-## Installation
+## Development Installation and Deployment to Docker Swarm
 
 ```bash
 
@@ -21,7 +21,7 @@ docker exec store_backend python manage.py loaddata initial.json
 EMAIL_USE_TLS=True
 EMAIL_HOST=smtp.sendgrid.net
 EMAIL_HOST_USER=apikey
-EMAIL_HOST_PASSWORD=YOURKEY
+EMAIL_HOST_PASSWORD=YOUR_KEY
 EMAIL_PORT=587
 
 # Or use email backend console for dev mode in settings.py file
@@ -33,6 +33,10 @@ docker exec store_backend python manage.py test
 
 # Running in development mode
 docker exec -it store_backend python manage.py runserver 0:8000
+
+# Deployment to docker swarm
+docker stack deploy -c <(docker-compose -f docker-compose-swarm.yml) store
+
 ```
 
 ## Features
@@ -56,7 +60,7 @@ docker exec -it store_backend python manage.py runserver 0:8000
 - [x] List 
 - [x] List (filter, search, ordering)
 - [x] Read 
-- [x] Create (signup)
+- [x] Create (sign up)
 - [x] Update 
 - [x] Test
 - [x] Docs
