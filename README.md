@@ -15,7 +15,7 @@ cp .env.example .env
 docker-compose up -d
 docker exec store_backend python manage.py makemigrations
 docker exec store_backend python manage.py migrate
-docker exec store_backend python manage.py loaddata initial.json
+docker exec store_backend python manage.py loaddata initial_data.json
 
 # Change the email credentials settings in .env file
 EMAIL_USE_TLS=True

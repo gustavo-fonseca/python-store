@@ -1,0 +1,49 @@
+[
+    {
+        "model": "account.user",
+        "pk": "230a1701-816a-48c3-9f46-caa5b21bbca5",
+        "fields": {
+            "password": "pbkdf2_sha256$180000$2HkPO3Gx2LUU$ZQXRinm4Gt9xupvNFEYDVLOe9nLnuol5c/eBHb7gbes=",
+            "last_login": null,
+            "is_superuser": true,
+            "is_staff": true,
+            "is_active": true,
+            "date_joined": "2020-07-14T12:48:22.935Z",
+            "email": "admin@admin.com",
+            "password_reset_token": null,
+            "password_reset_token_expiration_datetime": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "account.user",
+        "pk": "4f93e40d-9338-497c-a3a1-9922997dcc1c",
+        "fields": {
+            "password": "pbkdf2_sha256$180000$ydcBqlnQ964v$bejdtmV3K8TpizzZaa0U9CrJsSryeWZxCjTyfk/45/c=",
+            "last_login": null,
+            "is_superuser": false,
+            "is_staff": false,
+            "is_active": true,
+            "date_joined": "2020-07-14T12:55:32.629Z",
+            "email": "regular@regular.com",
+            "password_reset_token": null,
+            "password_reset_token_expiration_datetime": null,
+            "groups": [],
+            "user_permissions": []
+        }
+    },
+    {
+        "model": "client.clientprofile",
+        "pk": "14be920c-4829-4b45-866e-a207b0dce115",
+        "fields": {
+            "user": "4f93e40d-9338-497c-a3a1-9922997dcc1c",
+            "name": "Gustavo Fonseca",
+            "cpf": "112.899.300-74",
+            "gender": "M",
+            "cellphone": "(79) 98899-8899",
+            "date_birth": "2000-01-01",
+            "date_joined": "2020-07-14T12:55:32.738Z"
+        }
+    }
+]
