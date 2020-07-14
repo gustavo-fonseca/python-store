@@ -44,6 +44,31 @@ docker stack deploy -c <(docker-compose -f docker-compose-swarm.yml config) stor
 
 ```
 
+### API Authentication
+```bash
+
+# Login request
+
+curl --location --request POST '{{ api_endpoint }}/login' \
+--form 'email=admin@admin.com' \
+--form 'password=admin'
+
+# Login response
+
+{
+    "token": "received token jwt"
+}
+
+# Make authenticated requests
+
+curl --location --request GET '{{ endpoint }}/users' \
+--header 'Authorization: JWT {{ token }}' \
+--header 'Content-Type: application/json'
+
+
+```
+
+
 ## Model MindMeister
 
 ![Model MindMeister](docs/model-mind-meister.png)

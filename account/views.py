@@ -1,5 +1,5 @@
-# from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth import get_user_model, password_validation
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import viewsets, permissions, status, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
@@ -36,10 +36,12 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
+
 class ForgetPasswordViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = ForgetPasswordSerializer
 
+    @swagger_auto_schema(responses={200: ''})
     @action(
         methods=["post"],
         detail=False,
@@ -62,6 +64,7 @@ class ResetPasswordViewSet(viewsets.GenericViewSet):
     queryset = User.objects.all()
     serializer_class = ResetPasswordSerializer
 
+    @swagger_auto_schema(responses={200: '', 400: ''})
     @action(
         methods=["post"],
         detail=False,
