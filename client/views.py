@@ -46,6 +46,10 @@ class ClientProfileViewSer(mixins.ListModelMixin, mixins.RetrieveModelMixin,
     ordering_fields = ["name", "gender", "date_birth", "date_joined"]
 
     def get_queryset(self):
+        # queryset just for schema generation metadata
+        if getattr(self, 'swagger_fake_view', False):
+            return ClientProfile.objects.none()
+
         if self.request.user.is_superuser:
             return ClientProfile.objects.all()
         return ClientProfile.objects.filter(user=self.request.user)
@@ -64,6 +68,10 @@ class ClientAddressViewSet(viewsets.ModelViewSet):
     ordering_fields = ["district", "city", "state", "main"]
 
     def get_queryset(self):
+        # queryset just for schema generation metadata
+        if getattr(self, 'swagger_fake_view', False):
+            return ClientAddress.objects.none()
+
         queryset = ClientAddress.objects.filter(is_deleted=False)
         if not self.request.user.is_superuser:
             return queryset.filter(client_profile=self.request.user.client_profile)

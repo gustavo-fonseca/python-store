@@ -23,6 +23,9 @@ class BrandViewSet(viewsets.ModelViewSet):
     ordering_fields = ["name", "is_active"]
 
     def get_queryset(self):
+        # queryset just for schema generation metadata
+        if getattr(self, 'swagger_fake_view', False):
+            return Brand.objects.none()
         return Brand.objects.filter(is_active=True)
 
     def perform_destroy(self, instance):
@@ -44,6 +47,10 @@ class CategoryViewSet(viewsets.ModelViewSet):
     ordering_fields = ["name", "is_active"]
 
     def get_queryset(self):
+        # queryset just for schema generation metadata
+        if getattr(self, 'swagger_fake_view', False):
+            return Category.objects.none()
+        
         return Category.objects.filter(is_active=True)
 
     def perform_destroy(self, instance):
@@ -62,6 +69,10 @@ class ImageViewSet(viewsets.ModelViewSet):
     serializer_class = ImageSerializer
 
     def get_queryset(self):
+        # queryset just for schema generation metadata
+        if getattr(self, 'swagger_fake_view', False):
+            return Image.objects.none()
+        
         return Image.objects.filter(is_active=True)
 
     def perform_destroy(self, instance):
@@ -80,6 +91,10 @@ class ProductViewSet(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
 
     def get_queryset(self):
+        # queryset just for schema generation metadata
+        if getattr(self, 'swagger_fake_view', False):
+            return Product.objects.none()
+        
         return Product.objects.filter(is_active=True)
 
     def perform_destroy(self, instance):

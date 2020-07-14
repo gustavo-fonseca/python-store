@@ -1,3 +1,4 @@
+# from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth import get_user_model, password_validation
 from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
@@ -6,7 +7,6 @@ from rest_framework.decorators import action
 from account.serializers import UserSerializer
 
 User = get_user_model()
-
 
 class UserViewSet(viewsets.ModelViewSet):
     """
@@ -21,6 +21,10 @@ class UserViewSet(viewsets.ModelViewSet):
     ordering_fields = ["email", "is_active", "is_superuser", "date_joined"]
 
     def get_queryset(self):
+        # queryset just for schema generation metadata
+        if getattr(self, 'swagger_fake_view', False):
+            return User.objects.none()
+
         if self.request.user.is_superuser:
             return User.objects.all()
         return User.objects.filter(id=self.request.user.id)
@@ -36,6 +40,11 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
     Implements forget password actions
     """
 
+    def get_serializer_class(self):
+        # queryset just for schema generation metadata
+        if getattr(self, 'swagger_fake_view', False):
+            return UserSerializer
+    
     @action(
         methods=["post"],
         detail=False,
@@ -48,7 +57,7 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
         Send an email with a link to resent password
         """
         User.objects.forget_password(request.data.get("email"))
-        return Response({"sucess": True}, status=status.HTTP_200_OK)
+        return Response({"success": True}, status=status.HTTP_200_OK)
 
     @action(
         methods=["post"],
@@ -66,9 +75,9 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
         except Exception as e:
             return Response({"password": e}, status=status.HTTP_400_BAD_REQUEST)
 
-        reset_sucess = User.objects.reset_password(
+        reset_success = User.objects.reset_password(
             request.data.get("token"), request.data.get("password")
         )
-        if reset_sucess:
+        if reset_success:
             return Response(status=status.HTTP_200_OK)
         return Response(status=status.HTTP_400_BAD_REQUEST)
