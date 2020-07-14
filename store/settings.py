@@ -182,3 +182,17 @@ EMAIL_HOST = config("EMAIL_HOST", cast=str)
 EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str)
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str)
 EMAIL_PORT = config("EMAIL_PORT", cast=str)
+
+
+# sentry settings
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
+sentry_sdk.init(
+    dsn=config("SENTRY_DNS", cast=str),
+    integrations=[DjangoIntegration()],
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)

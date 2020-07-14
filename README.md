@@ -18,11 +18,16 @@ docker exec store_backend python manage.py migrate
 docker exec store_backend python manage.py loaddata initial_data.json
 
 # Change the email credentials settings in .env file
+# Use sendgrid.net or other smtp service
 EMAIL_USE_TLS=True
 EMAIL_HOST=smtp.sendgrid.net
 EMAIL_HOST_USER=apikey
 EMAIL_HOST_PASSWORD=YOUR_KEY
 EMAIL_PORT=587
+
+# Change the sentry dns settings in .env file
+# https://sentry.io
+SENTRY_DNS=https://xxxxxxxx@xxxx.ingest.sentry.io/xxxxx
 
 # Or use email backend console for dev mode in settings.py file
 # (Only if the email credentials were not provided)
@@ -132,8 +137,8 @@ All API Store features
 - [ ] Redis queue to send email
 
 ### Audit
+- [x] Tracking application error (Sentry)
 - [ ] Tracking user activity (ELK)
-- [ ] Tracking application error (Sentry)
 
 ### Payment Method
 - [ ] PagSeguro
@@ -146,6 +151,6 @@ All API Store features
 - [ ] AWS S3
 
 ### Docker and Swarm
-- [x] dockerize project
+- [x] Dockerize project
 - [x] Swarm mode
 - [ ] Docker secrets
