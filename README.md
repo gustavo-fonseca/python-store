@@ -108,14 +108,14 @@ All API Store features
 
 ### Product
 - [x] List 
-- [ ] List (filter, search, ordering)
-- [ ] List pagination
+- [x] List (filter, search, ordering)
+- [x] List pagination
 - [x] Read 
 - [x] Create 
 - [x] Update 
 - [x] Delete (Soft)
 - [ ] Test
-- [ ] Docs
+- [x] Docs
 
 ### Order (Pedido)
 - [ ] List 

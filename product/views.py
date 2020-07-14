@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from rest_framework import viewsets, permissions, mixins, status
 from rest_framework.response import Response
 
+from core.pagination import StandardResultsSetPagination
 from account.permissions import IsAdminUserOrReadOnly
 from product.models import Brand, Category, Image, Product
 from product.serializers import BrandSerializer, CategorySerializer, \
@@ -89,6 +90,10 @@ class ProductViewSet(viewsets.ModelViewSet):
     queryset = Product.objects.all()
     permission_classes = [IsAdminUserOrReadOnly]
     serializer_class = ProductSerializer
+    pagination_class = StandardResultsSetPagination
+    filterset_fields = ["brand", "categories", "is_active"]
+    search_fields = ["^name", "^short_description", "^full_description"]
+    ordering_fields = ["name", "categories", "brand"]    
 
     def get_queryset(self):
         # queryset just for schema generation metadata
