@@ -34,6 +34,7 @@ class ProductSerializer(serializers.ModelSerializer):
             "id",
             "brand",
             "categories",
+            "images",
             "slug",
             "name",
             "is_active",

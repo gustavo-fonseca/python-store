@@ -102,6 +102,11 @@ class Product(models.Model):
         verbose_name="Categories",
         related_name="products"
     )
+    images = models.ManyToManyField(
+        Image,
+        verbose_name="Images",
+        related_name="images"
+    )
     slug = models.SlugField(
         "URL slug",
         max_length=250,
