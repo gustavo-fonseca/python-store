@@ -44,6 +44,11 @@ docker stack deploy -c <(docker-compose -f docker-compose-swarm.yml config) stor
 
 ```
 
+## Model MindMeister
+
+![Model MindMeister](docs/model-mind-meister.png)
+
+
 ## Features
 
 All API Store features
