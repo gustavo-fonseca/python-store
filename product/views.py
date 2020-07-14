@@ -12,7 +12,7 @@ User = get_user_model()
 
 class BrandViewSet(viewsets.ModelViewSet):
     """
-    TODO: docs
+    Full rest api actions for product's brand
     """
 
     queryset = Brand.objects.all()
@@ -36,7 +36,7 @@ class BrandViewSet(viewsets.ModelViewSet):
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
-    TODO: docs
+    Full rest api actions for product's category
     """
 
     queryset = Category.objects.all()
@@ -61,7 +61,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
 class ImageViewSet(viewsets.ModelViewSet):
     """
-    TODO: docs
+    Full rest api actions for product's image
     """
 
     queryset = Image.objects.all()
@@ -83,7 +83,7 @@ class ImageViewSet(viewsets.ModelViewSet):
 
 class ProductViewSet(viewsets.ModelViewSet):
     """
-    TODO: docs
+    Full rest api actions for products
     """
 
     queryset = Product.objects.all()

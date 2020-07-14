@@ -84,8 +84,8 @@ All API Store features
 - [x] Create 
 - [x] Update 
 - [x] Delete (Soft)
-- [ ] Test
-- [ ] Docs
+- [x] Test
+- [x] Docs
 
 ### Product's Category
 - [x] List 
@@ -94,8 +94,8 @@ All API Store features
 - [x] Create 
 - [x] Update 
 - [x] Delete (Soft)
-- [ ] Test
-- [ ] Docs
+- [x] Test
+- [x] Docs
 
 ### Product's Image
 - [x] List 
@@ -103,8 +103,8 @@ All API Store features
 - [x] Create 
 - [x] Update 
 - [x] Delete (Soft)
-- [ ] Test
-- [ ] Docs
+- [x] Test
+- [x] Docs
 
 ### Product
 - [x] List 

@@ -10,7 +10,7 @@ User = get_user_model()
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    Implements the full CRUD for user model
+    Full rest api actions for user
     """
 
     queryset = User.objects.all()
@@ -37,7 +37,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
 class PasswordRecoverViewSet(viewsets.GenericViewSet):
     """
-    Implements forget password actions
+    Forget password rest api actions
     """
 
     def get_serializer_class(self):

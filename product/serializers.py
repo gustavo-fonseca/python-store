@@ -7,10 +7,6 @@ User = get_user_model()
 
 
 class BrandSerializer(serializers.ModelSerializer):
-    """
-    TODO:
-    """
-
     class Meta:
         model = Brand
         fields = ["id", "name", "is_active"]
@@ -18,10 +14,6 @@ class BrandSerializer(serializers.ModelSerializer):
 
 
 class CategorySerializer(serializers.ModelSerializer):
-    """
-    TODO:
-    """
-
     class Meta:
         model = Category
         fields = ["id", "name", "parent", "is_active"]
@@ -29,10 +21,6 @@ class CategorySerializer(serializers.ModelSerializer):
 
 
 class ImageSerializer(serializers.ModelSerializer):
-    """
-    TODO:
-    """
-
     class Meta:
         model = Image
         fields = ["id", "file", "is_active"]
@@ -40,10 +28,6 @@ class ImageSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    """
-    TODO:
-    """
-
     class Meta:
         model = Product
         fields = [

@@ -57,7 +57,7 @@ class ClientProfileViewSer(mixins.ListModelMixin, mixins.RetrieveModelMixin,
 
 class ClientAddressViewSet(viewsets.ModelViewSet):
     """
-    Client's address viewset that implements full model viewset actions
+    Full rest api actions for client's address
     """
 
     queryset = ClientAddress.objects.all()
