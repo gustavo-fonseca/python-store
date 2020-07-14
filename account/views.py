@@ -1,10 +1,11 @@
 # from drf_yasg.utils import swagger_auto_schema
 from django.contrib.auth import get_user_model, password_validation
-from rest_framework import viewsets, permissions, status
+from rest_framework import viewsets, permissions, status, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
 
-from account.serializers import UserSerializer
+from account.serializers import UserSerializer, ForgetPasswordSerializer, \
+    ResetPasswordSerializer
 
 User = get_user_model()
 
@@ -35,16 +36,10 @@ class UserViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
-class PasswordRecoverViewSet(viewsets.GenericViewSet):
-    """
-    Forget password rest api actions
-    """
+class ForgetPasswordViewSet(viewsets.GenericViewSet):
+    queryset = User.objects.all()
+    serializer_class = ForgetPasswordSerializer
 
-    def get_serializer_class(self):
-        # queryset just for schema generation metadata
-        if getattr(self, 'swagger_fake_view', False):
-            return UserSerializer
-    
     @action(
         methods=["post"],
         detail=False,
@@ -54,10 +49,18 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
     )
     def forget_password(self, request):
         """
-        Send an email with a link to resent password
+        Send an email with a token to reset password in /auth/reset-password action
         """
-        User.objects.forget_password(request.data.get("email"))
-        return Response({"success": True}, status=status.HTTP_200_OK)
+        serializer = ForgetPasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(status=status.HTTP_200_OK)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ResetPasswordViewSet(viewsets.GenericViewSet):
+    queryset = User.objects.all()
+    serializer_class = ResetPasswordSerializer
 
     @action(
         methods=["post"],
@@ -68,16 +71,11 @@ class PasswordRecoverViewSet(viewsets.GenericViewSet):
     )
     def reset_password(self, request):
         """
-        Resets the forgotten password with user.password_reset_token
+        Reset the password for a user who match the given token
         """
-        try:
-            password_validation.validate_password(request.data.get("password"))
-        except Exception as e:
-            return Response({"password": e}, status=status.HTTP_400_BAD_REQUEST)
-
-        reset_success = User.objects.reset_password(
-            request.data.get("token"), request.data.get("password")
-        )
-        if reset_success:
+        serializer = ResetPasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
             return Response(status=status.HTTP_200_OK)
-        return Response(status=status.HTTP_400_BAD_REQUEST)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+

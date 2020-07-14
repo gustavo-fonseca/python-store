@@ -50,7 +50,7 @@ class UserManager(BaseUserManager):
             token = uuid.uuid4()
 
             user.update(
-                password_reset_token=uuid.uuid4(),
+                password_reset_token=token,
                 password_reset_token_expiration_datetime=exp_datetime
             )
 
@@ -70,14 +70,22 @@ class UserManager(BaseUserManager):
         Alter user's password with the given new_raw_password
         Also check if the password_reset_token isn't outdated
         """
-        user = self.filter(password_reset_token=password_reset_token).first()
-        now = timezone.now()
-
-        if user and now < user.password_reset_token_expiration_datetime:
+        if self.is_reset_password_token_valid(password_reset_token):
+            user = self.filter(password_reset_token=password_reset_token).first()
             user.password_reset_token = None
             user.password_reset_token_expiration_datetime = None
             user.set_password(new_raw_password)
             user.save()
             return True
 
+        return False
+
+    def is_reset_password_token_valid(self, token):
+        """
+        Check if the given is valid
+        """
+        user = self.filter(password_reset_token=token).first()
+        now = timezone.now()
+        if user and now < user.password_reset_token_expiration_datetime:
+            return True
         return False

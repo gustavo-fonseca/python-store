@@ -117,9 +117,7 @@ All API Store features
 - [x] Docs
 
 ### Product
-- [x] List 
-- [x] List (filter, search, ordering)
-- [x] List pagination
+- [x] List (filter, search, ordering, pagination)
 - [x] Read 
 - [x] Create 
 - [x] Update 
@@ -147,7 +145,7 @@ All API Store features
 
 ### Payment Method
 - [ ] PagSeguro
-- [ ] PayPall
+- [ ] PayPal
 
 ### CI/CD
 - [ ] Drone CI
