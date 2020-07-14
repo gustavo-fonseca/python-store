@@ -35,7 +35,7 @@ docker exec store_backend python manage.py test
 docker exec -it store_backend python manage.py runserver 0:8000
 
 # Deployment to docker swarm
-docker stack deploy -c <(docker-compose -f docker-compose-swarm.yml) store
+docker stack deploy -c <(docker-compose -f docker-compose-swarm.yml config) store
 
 ```
 
@@ -50,7 +50,7 @@ All API Store features
 - [x] Create 
 - [x] Update 
 - [x] Delete (Soft)
-- [x] Forget password (Send link to email)
+- [x] Forget password (Send link to email) - You need to create a new user with a valid email address to see this working
 - [x] Reset password
 - [x] Login
 - [x] Token refresh
@@ -144,3 +144,8 @@ All API Store features
 
 ### Media/Static files storage
 - [ ] AWS S3
+
+### Docker and Swarm
+- [x] dockerize project
+- [x] Swarm mode
+- [ ] Docker secrets
