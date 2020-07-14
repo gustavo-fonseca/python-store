@@ -1,5 +1,78 @@
 [
     {
+        "model": "client.clientaddress",
+        "pk": "65d4b56e-d8ee-42f7-adae-791abc8cf5fb",
+        "fields": {
+            "client_profile": "14be920c-4829-4b45-866e-a207b0dce115",
+            "main": true,
+            "name": "Meu apartamento",
+            "postal_code": "49070-000",
+            "address": "Rua jo\u00e3o geniton da costa",
+            "district": "Jabotiana",
+            "number": "200",
+            "city": "Aracaju",
+            "state": "SE",
+            "complement": "",
+            "landmark": "",
+            "date_created": "2020-07-14T14:13:28.609Z",
+            "date_updated": "2020-07-14T14:14:03.709Z",
+            "is_deleted": false,
+            "date_deleted": null
+        }
+    },
+    {
+        "model": "product.brand",
+        "pk": "eea402d5-01d4-4068-811d-34f97f73f2a0",
+        "fields": {
+            "name": "Adidas",
+            "is_active": true
+        }
+    },
+    {
+        "model": "product.category",
+        "pk": "a88fcbcb-afb8-4968-ab48-811e5576b4ec",
+        "fields": {
+            "name": "Esportes",
+            "parent": null,
+            "is_active": true
+        }
+    },
+    {
+        "model": "product.image",
+        "pk": "a1fb65cb-2fc0-4f8b-b408-1252bd519b7b",
+        "fields": {
+            "file": "products-images/1.jpg",
+            "is_active": true
+        }
+    },
+    {
+        "model": "product.product",
+        "pk": 1,
+        "fields": {
+            "brand": "eea402d5-01d4-4068-811d-34f97f73f2a0",
+            "slug": null,
+            "name": "Iphone XI",
+            "is_active": true,
+            "short_description": "short desc",
+            "full_description": "full desc",
+            "color_hex": "#003344",
+            "price": "5200.90",
+            "old_price": "5600.00",
+            "cost_price": "3000.00",
+            "inventory": 30,
+            "weight_grams": 400,
+            "length_mm": 250,
+            "width_mm": 140,
+            "thickness_mm": 100,
+            "categories": [
+                "a88fcbcb-afb8-4968-ab48-811e5576b4ec"
+            ],
+            "images": [
+                "a1fb65cb-2fc0-4f8b-b408-1252bd519b7b"
+            ]
+        }
+    },
+    {
         "model": "account.user",
         "pk": "230a1701-816a-48c3-9f46-caa5b21bbca5",
         "fields": {
