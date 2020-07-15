@@ -1,13 +1,10 @@
-from django.urls import path, include, re_path
+from django.urls import path, include
 from rest_framework import permissions
+from rest_framework import routers
+from rest_framework_jwt.views import (obtain_jwt_token, refresh_jwt_token,
+                                      verify_jwt_token)
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
-from rest_framework import routers
-from rest_framework_jwt.views import (
-    obtain_jwt_token,
-    refresh_jwt_token,
-    verify_jwt_token,
-)
 
 from account.urls import users_router
 from client.urls import clients_router
@@ -34,5 +31,6 @@ urlpatterns = [
     path("login", obtain_jwt_token, name="login"),
     path("token-refresh", refresh_jwt_token, name="token-refresh"),
     path("token-verify", verify_jwt_token, name="token-verify"),
-    path("docs", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
+    path("docs", schema_view.with_ui("redoc", cache_timeout=0),
+         name="schema-redoc"),
 ]

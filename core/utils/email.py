@@ -13,8 +13,9 @@ class Email:
     to avoid blocking the request
     """
 
-    def __init__(self, subject: str, from_name: str, from_email: str, to_name: str,
-                 to_email: str, template_path: str, template_context: Dict[str, any]) -> None:
+    def __init__(self, subject: str, from_name: str, from_email: str,
+                 to_name: str, to_email: str, template_path: str,
+                 template_context: Dict[str, any]) -> None:
         self.subject = subject
         self.from_name = from_name
         self.from_email = from_email
@@ -37,7 +38,8 @@ class Email:
         )
 
         # getting a string from a django-html template
-        html_message = get_template(self.template_path).render(self.template_context)
+        html_message = get_template(
+            self.template_path).render(self.template_context)
 
         # calling the thread process
         tread = threading.Thread(
@@ -46,8 +48,8 @@ class Email:
         )
         tread.start()
 
-    def send_email_on_thread(
-        self, subject: str, message: str, to: List[str], from_email: str) -> None:
+    def send_email_on_thread(self, subject: str, message: str,
+                             to: List[str], from_email: str) -> None:
         """
         Sending email
         """

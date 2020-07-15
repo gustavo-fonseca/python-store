@@ -1,4 +1,5 @@
-import uuid, datetime
+import uuid
+import datetime
 
 from django.utils import timezone
 from django.contrib.auth.base_user import BaseUserManager
@@ -32,9 +33,9 @@ class UserManager(BaseUserManager):
         extra_fields.setdefault("is_active", True)
 
         if extra_fields.get("is_staff") is not True:
-            raise ValueError(_("Superuser must have is_staff=True."))
+            raise ValueError("Superuser must have is_staff=True.")
         if extra_fields.get("is_superuser") is not True:
-            raise ValueError(_("Superuser must have is_superuser=True."))
+            raise ValueError("Superuser must have is_superuser=True.")
         return self.create_user(email, password, **extra_fields)
 
     def forget_password(self, email):
@@ -51,7 +52,7 @@ class UserManager(BaseUserManager):
 
             user.update(
                 password_reset_token=token,
-                password_reset_token_expiration_datetime=exp_datetime
+                password_reset_token_expiration_datetime=exp_datetime,
             )
 
             email = Email(
@@ -71,7 +72,8 @@ class UserManager(BaseUserManager):
         Also check if the password_reset_token isn't outdated
         """
         if self.is_reset_password_token_valid(password_reset_token):
-            user = self.filter(password_reset_token=password_reset_token).first()
+            user = self.filter(
+                password_reset_token=password_reset_token).first()
             user.password_reset_token = None
             user.password_reset_token_expiration_datetime = None
             user.set_password(new_raw_password)

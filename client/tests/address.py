@@ -20,7 +20,8 @@ class ClientAddressTests(APITestCase):
             "date_birth": "2000-01-01",
             "cellphone": "(79) 98899-8899",
         }
-        self.valid_address_payload = {
+        # address payload
+        self.valid_payload = {
             "main": True,
             "name": "Meu apartamento",
             "postal_code": "49070-000",
@@ -43,8 +44,9 @@ class ClientAddressTests(APITestCase):
         )
 
         # new address
-        response = self.client.post(reverse("clientaddress-list"), self.valid_address_payload)
-        self.address = address = ClientAddress.objects.get(pk=response.data.get("id"))
+        response = self.client.post(
+            reverse("clientaddress-list"), self.valid_payload)
+        self.address = ClientAddress.objects.get(pk=response.data.get("id"))
 
     def test_list_address(self):
         """
@@ -58,26 +60,30 @@ class ClientAddressTests(APITestCase):
         """
         Ensure we can retrieve our address' object
         """
-        response = self.client.get(reverse("clientaddress-detail", args=[self.address.pk]))
+        response = self.client.get(
+            reverse("clientaddress-detail", args=[self.address.pk]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_address(self):
         """
         Ensure we can create address' object
         """
-        response = self.client.post(reverse("clientaddress-list"), self.valid_address_payload)
+        response = self.client.post(
+            reverse("clientaddress-list"), self.valid_payload)
         address = ClientAddress.objects.get(pk=response.data.get("id"))
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-        self.assertEqual(address.main, self.valid_address_payload.get("main"))
-        self.assertEqual(address.name, self.valid_address_payload.get("name"))
-        self.assertEqual(address.postal_code, self.valid_address_payload.get("postal_code"))
-        self.assertEqual(address.address, self.valid_address_payload.get("address"))
-        self.assertEqual(address.district, self.valid_address_payload.get("district"))
-        self.assertEqual(address.number, self.valid_address_payload.get("number"))
-        self.assertEqual(address.city, self.valid_address_payload.get("city"))
-        self.assertEqual(address.state, self.valid_address_payload.get("state"))
-        self.assertEqual(address.complement, self.valid_address_payload.get("complement"))
-        self.assertEqual(address.landmark, self.valid_address_payload.get("landmark"))
+        self.assertEqual(address.main, self.valid_payload.get("main"))
+        self.assertEqual(address.name, self.valid_payload.get("name"))
+        self.assertEqual(
+            address.postal_code, self.valid_payload.get("postal_code"))
+        self.assertEqual(address.address, self.valid_payload.get("address"))
+        self.assertEqual(address.district, self.valid_payload.get("district"))
+        self.assertEqual(address.number, self.valid_payload.get("number"))
+        self.assertEqual(address.city, self.valid_payload.get("city"))
+        self.assertEqual(address.state, self.valid_payload.get("state"))
+        self.assertEqual(
+            address.complement, self.valid_payload.get("complement"))
+        self.assertEqual(address.landmark, self.valid_payload.get("landmark"))
 
     def test_update_address(self):
         """
@@ -104,13 +110,15 @@ class ClientAddressTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(self.address.main, update_payload.get("main"))
         self.assertEqual(self.address.name, update_payload.get("name"))
-        self.assertEqual(self.address.postal_code, update_payload.get("postal_code"))
+        self.assertEqual(
+            self.address.postal_code, update_payload.get("postal_code"))
         self.assertEqual(self.address.address, update_payload.get("address"))
         self.assertEqual(self.address.district, update_payload.get("district"))
         self.assertEqual(self.address.number, update_payload.get("number"))
         self.assertEqual(self.address.city, update_payload.get("city"))
         self.assertEqual(self.address.state, update_payload.get("state"))
-        self.assertEqual(self.address.complement, update_payload.get("complement"))
+        self.assertEqual(
+            self.address.complement, update_payload.get("complement"))
         self.assertEqual(self.address.landmark, update_payload.get("landmark"))
 
     def test_soft_delete_address(self):
@@ -128,7 +136,8 @@ class ClientAddressTests(APITestCase):
 
     def test_address_permissions(self):
         """
-        Ensure only the owner can list, retrieve, create, update and delete address
+        Ensure only the owner can list, retrieve, create, update
+        and delete address
         """
         # new client
         self.valid_client_data["email"] = "new_regular@regular.com"
@@ -145,13 +154,14 @@ class ClientAddressTests(APITestCase):
         self.assertEqual(response.data, [])
 
         # retrieve test
-        response = self.client.get(reverse("clientaddress-detail", args=[self.address.pk]))
+        response = self.client.get(
+            reverse("clientaddress-detail", args=[self.address.pk]))
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
         # update test
         response = self.client.put(
             reverse("clientaddress-detail", args=[self.address.pk]),
-            self.valid_address_payload
+            self.valid_payload
         )
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 

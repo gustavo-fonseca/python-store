@@ -1,12 +1,12 @@
 from django.contrib.auth import get_user_model
-from rest_framework import viewsets, permissions, mixins, status
+from rest_framework import viewsets, status
 from rest_framework.response import Response
 
 from core.pagination import StandardResultsSetPagination
 from account.permissions import IsAdminUserOrReadOnly
 from product.models import Brand, Category, Image, Product
-from product.serializers import BrandSerializer, CategorySerializer, \
-     ImageSerializer, ProductSerializer
+from product.serializers import (BrandSerializer, CategorySerializer,
+                                 ImageSerializer, ProductSerializer)
 
 User = get_user_model()
 
@@ -51,7 +51,7 @@ class CategoryViewSet(viewsets.ModelViewSet):
         # queryset just for schema generation metadata
         if getattr(self, 'swagger_fake_view', False):
             return Category.objects.none()
-        
+
         return Category.objects.filter(is_active=True)
 
     def perform_destroy(self, instance):
@@ -73,7 +73,7 @@ class ImageViewSet(viewsets.ModelViewSet):
         # queryset just for schema generation metadata
         if getattr(self, 'swagger_fake_view', False):
             return Image.objects.none()
-        
+
         return Image.objects.filter(is_active=True)
 
     def perform_destroy(self, instance):
@@ -93,17 +93,16 @@ class ProductViewSet(viewsets.ModelViewSet):
     pagination_class = StandardResultsSetPagination
     filterset_fields = ["brand", "categories", "is_active"]
     search_fields = ["^name", "^short_description", "^full_description"]
-    ordering_fields = ["name", "categories", "brand"]    
+    ordering_fields = ["name", "categories", "brand"]
 
     def get_queryset(self):
         # queryset just for schema generation metadata
         if getattr(self, 'swagger_fake_view', False):
             return Product.objects.none()
-        
+
         return Product.objects.filter(is_active=True)
 
     def perform_destroy(self, instance):
         instance.is_active = False
         instance.save()
         return Response(status=status.HTTP_204_NO_CONTENT)
-

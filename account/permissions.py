@@ -8,12 +8,16 @@ class IsUserOwnerAdmin(permissions.BasePermission):
     """
 
     def has_object_permission(self, request, view, obj):
-        return (request.user and request.user.is_superuser) or (
-            obj.user == request.user
-        )
+        return request.user.is_superuser or (obj.user == request.user)
 
 
 class IsAdminUserOrReadOnly(IsAdminUser):
+    """
+    Custom permission to only allow admin to edit, create and delete
+    Regular users only can read
+    """
+
     def has_permission(self, request, view):
-        is_admin = super(IsAdminUserOrReadOnly, self).has_permission(request, view)
+        is_admin = super(IsAdminUserOrReadOnly, self).has_permission(
+            request, view)
         return request.method in SAFE_METHODS or is_admin

@@ -1,9 +1,9 @@
 import io
-from PIL import Image as ImagePillow
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 from rest_framework.test import APITestCase
 from rest_framework import status
+from PIL import Image as ImagePillow
 
 from product.models import Image
 
@@ -40,7 +40,8 @@ class ImageTests(APITestCase):
         self.client.login(username="admin@admin.com", password="admin")
 
         # create new image
-        response = self.client.post(reverse("image-list"), self.valid_payload, format="multipart")
+        response = self.client.post(
+            reverse("image-list"), self.valid_payload, format="multipart")
         self.image = Image.objects.get(pk=response.data.get("id"))
 
     def test_list_image(self):
@@ -50,12 +51,13 @@ class ImageTests(APITestCase):
         response = self.client.get(reverse("image-list"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
-    
+
     def test_retrieve_image(self):
         """
         Ensure we can retrieve image
         """
-        response = self.client.get(reverse("image-detail", args=[self.image.pk]))
+        response = self.client.get(
+            reverse("image-detail", args=[self.image.pk]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_image(self):
@@ -63,7 +65,8 @@ class ImageTests(APITestCase):
         Ensure we can create image
         """
         self.valid_payload["file"] = self.generate_photo_file()
-        response = self.client.post(reverse("image-list"), self.valid_payload, format="multipart")
+        response = self.client.post(
+            reverse("image-list"), self.valid_payload, format="multipart")
         image = Image.objects.get(pk=response.data.get("id"))
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
@@ -78,7 +81,7 @@ class ImageTests(APITestCase):
         """
         self.valid_payload["file"] = self.generate_photo_file()
         self.valid_payload["is_active"] = False
-        
+
         response = self.client.put(
             reverse("image-detail", args=[self.image.pk]),
             self.valid_payload,
@@ -90,7 +93,8 @@ class ImageTests(APITestCase):
         """
         Ensure we can delete image
         """
-        response = self.client.delete(reverse("image-detail", args=[self.image.pk]))
+        response = self.client.delete(
+            reverse("image-detail", args=[self.image.pk]))
         self.image.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(self.image.is_active, False)
@@ -118,7 +122,8 @@ class ImageTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # retrieve test
-        response = self.client.get(reverse("image-detail", args=[self.image.pk]))
+        response = self.client.get(
+            reverse("image-detail", args=[self.image.pk]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # create test
@@ -131,6 +136,6 @@ class ImageTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         # delete test
-        response = self.client.delete(reverse("image-detail", args=[self.image.pk]))
+        response = self.client.delete(
+            reverse("image-detail", args=[self.image.pk]))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-

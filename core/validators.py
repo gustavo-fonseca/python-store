@@ -26,4 +26,3 @@ def brasil_postal_code_validate(value: str) -> bool:
     if re.match(r"^[0-9]{5}-[0-9]{3}$", value):
         return True
     return False
-

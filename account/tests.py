@@ -35,7 +35,7 @@ class UserAPITests(APITestCase):
 
         # Regular user
         self.client.login(username="regular@regular.com", password="regular")
-        
+
         response = self.client.post(reverse("user-list"), self.valid_payload)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
@@ -71,12 +71,14 @@ class UserAPITests(APITestCase):
 
         # Regular user
         self.client.login(username="regular@regular.com", password="regular")
-        response = self.client.get(reverse("user-detail", args=[self.admin_user.pk]))
+        response = self.client.get(
+            reverse("user-detail", args=[self.admin_user.pk]))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         # Admin user
         self.client.login(username="admin@admin.com", password="admin")
-        response = self.client.get(reverse("user-detail", args=[self.admin_user.pk]))
+        response = self.client.get(
+            reverse("user-detail", args=[self.admin_user.pk]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_update_user(self):
@@ -88,8 +90,7 @@ class UserAPITests(APITestCase):
         self.client.login(username="regular@regular.com", password="regular")
         response = self.client.put(
             reverse("user-detail", args=[self.admin_user.pk]),
-            self.valid_payload
-        )
+            self.valid_payload)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         # Admin user
@@ -109,12 +110,14 @@ class UserAPITests(APITestCase):
 
         # Regular user
         self.client.login(username="regular@regular.com", password="regular")
-        response = self.client.delete(reverse("user-detail", args=[self.admin_user.pk]))
+        response = self.client.delete(
+            reverse("user-detail", args=[self.admin_user.pk]))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         # Admin user
         self.client.login(username="admin@admin.com", password="admin")
-        response = self.client.delete(reverse("user-detail", args=[self.admin_user.pk]))
+        response = self.client.delete(
+            reverse("user-detail", args=[self.admin_user.pk]))
 
         self.admin_user.refresh_from_db()
 
@@ -133,8 +136,9 @@ class UserAPITests(APITestCase):
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIsNotNone(self.regular_user.password_reset_token)
-        self.assertIsNotNone(self.regular_user.password_reset_token_expiration_datetime)
-   
+        self.assertIsNotNone(
+            self.regular_user.password_reset_token_expiration_datetime)
+
         # reset action
         payload = {
             "password": "AER123$123",
@@ -145,4 +149,5 @@ class UserAPITests(APITestCase):
 
         self.regular_user.refresh_from_db()
         self.assertIsNone(self.regular_user.password_reset_token)
-        self.assertIsNone(self.regular_user.password_reset_token_expiration_datetime)
+        self.assertIsNone(
+            self.regular_user.password_reset_token_expiration_datetime)

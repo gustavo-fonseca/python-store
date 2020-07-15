@@ -1,6 +1,7 @@
 from rest_framework import routers
 
-from client.views import SignUpViewSet, ClientProfileViewSer, ClientAddressViewSet
+from client.views import (SignUpViewSet, ClientProfileViewSer,
+                          ClientAddressViewSet)
 
 
 clients_router = routers.SimpleRouter(trailing_slash=False)

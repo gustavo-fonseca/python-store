@@ -45,7 +45,8 @@ class SignUpTests(APITestCase):
         self.assertEqual(client_profile.name, self.valid_data.get("name"))
         self.assertEqual(client_profile.cpf, self.valid_data.get("cpf"))
         self.assertEqual(client_profile.gender, self.valid_data.get("gender"))
-        self.assertEqual(client_profile.cellphone, self.valid_data.get("cellphone"))
+        self.assertEqual(
+            client_profile.cellphone, self.valid_data.get("cellphone"))
 
         # Ensure the email is unique
         response = self.client.post(reverse("signup-list"), self.valid_data)
@@ -71,4 +72,3 @@ class SignUpTests(APITestCase):
         self.assertIn("gender", response.data)
         self.assertIn("date_birth", response.data)
         self.assertIn("cellphone", response.data)
-

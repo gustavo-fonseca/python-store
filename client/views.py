@@ -28,7 +28,7 @@ class SignUpViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 class ClientProfileViewSer(mixins.ListModelMixin, mixins.RetrieveModelMixin,
                            mixins.UpdateModelMixin, viewsets.GenericViewSet):
     """
-    Client's profile viewser that implements list, retrieve and update actions 
+    Client's profile viewser that implements list, retrieve and update actions
     """
 
     queryset = ClientProfile.objects.all()
@@ -63,7 +63,8 @@ class ClientAddressViewSet(viewsets.ModelViewSet):
     queryset = ClientAddress.objects.all()
     permission_classes = [IsClientProfileOwner]
     serializer_class = ClientAddressSerializer
-    filterset_fields = ["name", "postal_code", "district", "city", "state", "main"]
+    filterset_fields = ["name", "postal_code", "district", "city",
+                        "state", "main"]
     search_fields = ["^name", "^postal_code", "^district", "^city", "state"]
     ordering_fields = ["district", "city", "state", "main"]
 
@@ -74,12 +75,13 @@ class ClientAddressViewSet(viewsets.ModelViewSet):
 
         queryset = ClientAddress.objects.filter(is_deleted=False)
         if not self.request.user.is_superuser:
-            return queryset.filter(client_profile=self.request.user.client_profile)
+            return queryset.filter(
+                client_profile=self.request.user.client_profile)
         return queryset
 
     def perform_create(self, serializer):
         serializer.save(client_profile=self.request.user.client_profile)
-    
+
     def perform_destroy(self, instance):
         instance.is_deleted = True
         instance.date_deleted = timezone.now()

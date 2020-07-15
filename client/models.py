@@ -48,9 +48,9 @@ class ClientProfile(models.Model):
         "Date joined",
         auto_now_add=True,
     )
-    
+
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
     class Meta:
         verbose_name = "Client's Profile"
@@ -136,7 +136,7 @@ class ClientAddress(models.Model):
     )
 
     def __str__(self):
-        return self.name
+        return f"{self.name}"
 
     def save(self, *args, **kwargs):
         """
@@ -149,8 +149,9 @@ class ClientAddress(models.Model):
         # make sure that just one address will be main
         if self.main:
             main_address.update(main=False)
-        
-        # If there isn't a main address force the current created/updated to be the main
+
+        # If there isn't a main address force the current\
+        # created/updated to be the main
         if not main_address.count():
             self.main = True
         super(ClientAddress, self).save(*args, **kwargs)

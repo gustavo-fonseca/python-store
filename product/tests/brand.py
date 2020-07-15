@@ -40,12 +40,13 @@ class BrandTests(APITestCase):
         response = self.client.get(reverse("brand-list"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
-    
+
     def test_retrieve_brand(self):
         """
         Ensure we can retrieve brand
         """
-        response = self.client.get(reverse("brand-detail", args=[self.brand.pk]))
+        response = self.client.get(
+            reverse("brand-detail", args=[self.brand.pk]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_brand(self):
@@ -68,7 +69,7 @@ class BrandTests(APITestCase):
         """
         self.valid_payload["name"] = "Nike"
         self.valid_payload["is_active"] = False
-        
+
         response = self.client.put(
             reverse("brand-detail", args=[self.brand.pk]),
             self.valid_payload
@@ -79,7 +80,8 @@ class BrandTests(APITestCase):
         """
         Ensure we can delete brand
         """
-        response = self.client.delete(reverse("brand-detail", args=[self.brand.pk]))
+        response = self.client.delete(
+            reverse("brand-detail", args=[self.brand.pk]))
         self.brand.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(self.brand.is_active, False)
@@ -107,7 +109,8 @@ class BrandTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # retrieve test
-        response = self.client.get(reverse("brand-detail", args=[self.brand.pk]))
+        response = self.client.get(
+            reverse("brand-detail", args=[self.brand.pk]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # create test
@@ -120,6 +123,6 @@ class BrandTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         # delete test
-        response = self.client.delete(reverse("brand-detail", args=[self.brand.pk]))
+        response = self.client.delete(
+            reverse("brand-detail", args=[self.brand.pk]))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-

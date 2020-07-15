@@ -10,7 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
-import os, datetime
+import os
+import datetime
+
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 from decouple import config, Csv
 
@@ -102,12 +106,10 @@ DATABASES = {
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
-    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",},
-    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",},
-    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",},
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"}, # pylint: disable=line-too-long
+    {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"}, # pylint: disable=line-too-long
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"}, # pylint: disable=line-too-long
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"} # pylint: disable=line-too-long
 ]
 
 
@@ -141,9 +143,9 @@ AUTH_USER_MODEL = "account.User"
 
 # Django Rest Framework settings
 REST_FRAMEWORK = {
-    # "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
-    # "PAGE_SIZE": 100,
-    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated"
+    ],
     "DEFAULT_FILTER_BACKENDS": [
         "rest_framework.filters.SearchFilter",
         "rest_framework.filters.OrderingFilter",
@@ -185,14 +187,12 @@ EMAIL_PORT = config("EMAIL_PORT", cast=str)
 
 
 # sentry settings
-import sentry_sdk
-from sentry_sdk.integrations.django import DjangoIntegration
+if DEBUG is False:
+    sentry_sdk.init(
+        dsn=config("SENTRY_DNS", cast=str),
+        integrations=[DjangoIntegration()],
 
-sentry_sdk.init(
-    dsn=config("SENTRY_DNS", cast=str),
-    integrations=[DjangoIntegration()],
-
-    # If you wish to associate users to errors (assuming you are using
-    # django.contrib.auth) you may enable sending PII data.
-    send_default_pii=True
-)
+        # If you wish to associate users to errors (assuming you are using
+        # django.contrib.auth) you may enable sending PII data.
+        send_default_pii=True
+    )

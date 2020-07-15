@@ -30,7 +30,8 @@ class CategoryTests(APITestCase):
         self.client.login(username="admin@admin.com", password="admin")
 
         # create new category
-        response = self.client.post(reverse("category-list"), self.valid_payload)
+        response = self.client.post(
+            reverse("category-list"), self.valid_payload)
         self.category = Category.objects.get(pk=response.data.get("id"))
 
     def test_list_category(self):
@@ -40,26 +41,30 @@ class CategoryTests(APITestCase):
         response = self.client.get(reverse("category-list"))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), 1)
-    
+
     def test_retrieve_category(self):
         """
         Ensure we can retrieve category
         """
-        response = self.client.get(reverse("category-detail", args=[self.category.pk]))
+        response = self.client.get(
+            reverse("category-detail", args=[self.category.pk]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_create_category(self):
         """
         Ensure we can create category
         """
-        response = self.client.post(reverse("category-list"), self.valid_payload)
+        response = self.client.post(
+            reverse("category-list"), self.valid_payload)
         category = Category.objects.get(pk=response.data.get("id"))
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(category.name, self.valid_payload.get("name"))
-        self.assertEqual(category.is_active, self.valid_payload.get("is_active"))
+        self.assertEqual(
+            category.is_active, self.valid_payload.get("is_active"))
 
-        response = self.client.post(reverse("category-list"), self.invalid_payload)
+        response = self.client.post(
+            reverse("category-list"), self.invalid_payload)
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_update_category(self):
@@ -68,7 +73,7 @@ class CategoryTests(APITestCase):
         """
         self.valid_payload["name"] = "Nike"
         self.valid_payload["is_active"] = False
-        
+
         response = self.client.put(
             reverse("category-detail", args=[self.category.pk]),
             self.valid_payload
@@ -79,7 +84,8 @@ class CategoryTests(APITestCase):
         """
         Ensure we can delete category
         """
-        response = self.client.delete(reverse("category-detail", args=[self.category.pk]))
+        response = self.client.delete(
+            reverse("category-detail", args=[self.category.pk]))
         self.category.refresh_from_db()
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(self.category.is_active, False)
@@ -107,19 +113,23 @@ class CategoryTests(APITestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # retrieve test
-        response = self.client.get(reverse("category-detail", args=[self.category.pk]))
+        response = self.client.get(
+            reverse("category-detail", args=[self.category.pk]))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
         # create test
-        response = self.client.post(reverse("category-list"), self.valid_payload)
+        response = self.client.post(
+            reverse("category-list"), self.valid_payload)
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         # update test
         response = self.client.put(
-            reverse("category-detail", args=[self.category.pk]), self.valid_payload)
+            reverse("category-detail", args=[self.category.pk]),
+            self.valid_payload
+        )
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
         # delete test
-        response = self.client.delete(reverse("category-detail", args=[self.category.pk]))
+        response = self.client.delete(
+            reverse("category-detail", args=[self.category.pk]))
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
-

@@ -5,6 +5,10 @@ User = get_user_model()
 
 
 class UserSerializer(serializers.ModelSerializer):
+    """
+    User serializer for full CRUD actions
+    """
+
     def get_fields(self, *args, **kwargs):
         """
         Make password field required only for PUT and PATCH http methods
@@ -17,7 +21,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "email", "password", "is_superuser", "is_active", "date_joined"]
+        fields = ["id", "email", "password", "is_superuser", "is_active",
+                  "date_joined"]
         read_only_fields = ["id", "date_joined"]
         extra_kwargs = {"password": {"write_only": True, "required": True}}
 
@@ -43,7 +48,8 @@ class ResetPasswordSerializer(serializers.Serializer):
         """
         if not User.objects.is_reset_password_token_valid(value):
             raise serializers.ValidationError(
-                "The given token is not valid or outdated. Please request a new token."
+                "The given token is not valid or outdated. "
+                "Please request a new token."
             )
         return value
 
@@ -55,10 +61,13 @@ class ResetPasswordSerializer(serializers.Serializer):
         return value
 
     def save(self):
+        """
+        Override serializer save method to reset user password
+        Return True if success
+        """
         token = self.validated_data['token']
         password = self.validated_data['password']
-        reset_success = User.objects.reset_password(token, password)
+        return User.objects.reset_password(token, password)
 
     class Meta:
         fields = ["token", "password"]
-

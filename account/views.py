@@ -1,17 +1,17 @@
-from django.contrib.auth import get_user_model, password_validation
-from drf_yasg.utils import swagger_auto_schema
-from rest_framework import viewsets, permissions, status, mixins
+from django.contrib.auth import get_user_model
+from rest_framework import viewsets, permissions, status
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from drf_yasg.utils import swagger_auto_schema
 
-from account.serializers import UserSerializer, ForgetPasswordSerializer, \
-    ResetPasswordSerializer
+from account.serializers import (UserSerializer, ForgetPasswordSerializer,
+                                 ResetPasswordSerializer)
 
 User = get_user_model()
 
 class UserViewSet(viewsets.ModelViewSet):
     """
-    Full rest api actions for user
+    Full rest api actions for user model
     """
 
     queryset = User.objects.all()
@@ -51,7 +51,7 @@ class ForgetPasswordViewSet(viewsets.GenericViewSet):
     )
     def forget_password(self, request):
         """
-        Send an email with a token to reset password in /auth/reset-password action
+        Send an email with a token to reset password in reset-password action
         """
         serializer = ForgetPasswordSerializer(data=request.data)
         if serializer.is_valid():
@@ -70,7 +70,7 @@ class ResetPasswordViewSet(viewsets.GenericViewSet):
         detail=False,
         url_path="reset-password",
         url_name="reset-password",
-        permission_classes=[permissions.AllowAny],
+        permission_classes=[permissions.AllowAny]
     )
     def reset_password(self, request):
         """
@@ -81,4 +81,3 @@ class ResetPasswordViewSet(viewsets.GenericViewSet):
             serializer.save()
             return Response(status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-

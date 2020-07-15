@@ -1,89 +1,8 @@
-import uuid
-
 from django.db import models
 
-
-class Brand(models.Model):
-    """
-    Product's brand
-    """
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
-    name = models.CharField(
-        "Name",
-        max_length=240
-    )
-    is_active = models.BooleanField(
-        "Is active",
-        default=True
-    )
-
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        verbose_name = "Brand"
-
-
-class Category(models.Model):
-    """
-    Product's category
-    """
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
-    name = models.CharField(
-        "Name",
-        max_length=240
-    )
-    parent = models.ForeignKey(
-        "self",
-        verbose_name="Parent",
-        related_name="children",
-        on_delete=models.SET_NULL,
-        null=True
-    )
-    is_active = models.BooleanField(
-        "Is active",
-        default=True
-    )
-
-    def __str__(self):
-        return self.name
-    
-    class Meta:
-        verbose_name = "Category"
-        verbose_name_plural = "Categories"
-
-
-class Image(models.Model):
-    """
-    Product's image
-    """
-    id = models.UUIDField(
-        primary_key=True,
-        default=uuid.uuid4,
-        editable=False
-    )
-    file = models.FileField(
-        "Image file",
-        upload_to="products-images/"
-    )
-    is_active = models.BooleanField(
-        "Is active",
-        default=True
-    )
-
-    def __str__(self):
-        return str(self.id)
-
-    class Meta:
-        verbose_name = "Image"
+from product.models.category import Category
+from product.models.brand import Brand
+from product.models.image import Image
 
 
 class Product(models.Model):
@@ -122,7 +41,7 @@ class Product(models.Model):
         "Is active",
         default=True
     )
-    
+
     # technical features
     short_description = models.TextField(
         "Short description",
@@ -178,10 +97,9 @@ class Product(models.Model):
         "Thickness/Depth in millimeters",
     )
 
-
     def __str__(self):
-        return self.name
-    
+        return f"{self.name}"
+
     class Meta:
         verbose_name = "Product"
     

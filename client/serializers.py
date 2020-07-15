@@ -1,7 +1,6 @@
 from django.contrib.auth import get_user_model, password_validation
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-from rest_framework.fields import CurrentUserDefault
 
 from core import validators
 from client.models import ClientProfile, ClientAddress
@@ -19,7 +18,8 @@ class ClientProfileSerializer(serializers.ModelSerializer):
         """
         if not validators.cellphone_validate(value):
             raise serializers.ValidationError(
-                "Cellphone has wrong format. Use this format instead: (00) 98888-7777"
+                "Cellphone has wrong format. "
+                "Use this format instead: (00) 98888-7777"
             )
         return value
 
@@ -46,7 +46,8 @@ class ClientAddressSerializer(serializers.ModelSerializer):
         """
         if not validators.brasil_postal_code_validate(value):
             raise serializers.ValidationError(
-                "Postal Code has wrong format. Use this format instead: 00000-000"
+                "Postal Code has wrong format. "
+                "Use this format instead: 00000-000"
             )
         return value
 
@@ -81,7 +82,8 @@ class SignUpSerializer(serializers.ModelSerializer):
         validators=[
             UniqueValidator(
                 queryset=User.objects.all(),
-                message="This email address is already taken. please try another.",
+                message="This email address is already taken. "
+                        "please try another.",
             )
         ],
     )
@@ -103,7 +105,8 @@ class SignUpSerializer(serializers.ModelSerializer):
         """
         if not validators.cellphone_validate(value):
             raise serializers.ValidationError(
-                "Cellphone has wrong format. Use this format instead: (00) 98888-7777"
+                "Cellphone has wrong format. "
+                "Use this format instead: (00) 98888-7777"
             )
         return value
 
@@ -154,4 +157,3 @@ class SignUpSerializer(serializers.ModelSerializer):
             "date_birth",
             "cellphone",
         ]
-
