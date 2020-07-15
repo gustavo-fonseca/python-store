@@ -1,8 +1,11 @@
 from django.db import models
+from django.utils.text import slugify
 
 from product.models.category import Category
 from product.models.brand import Brand
 from product.models.image import Image
+
+from core.utils.random_string import get_random_string
 
 
 class Product(models.Model):
@@ -97,9 +100,18 @@ class Product(models.Model):
         "Thickness/Depth in millimeters",
     )
 
+    def save(self, *args, **kwargs):
+        """
+        Generate the product's slug based on
+        the product's name and random string
+        """
+        self.slug = f"{get_random_string(6)}-{slugify(self.name)}"
+        super(Product, self).save(*args, **kwargs)
+
     def __str__(self):
         return f"{self.name}"
 
     class Meta:
         verbose_name = "Product"
+        ordering = ['-id']
     
