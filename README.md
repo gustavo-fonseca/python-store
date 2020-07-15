@@ -1,4 +1,4 @@
-# A Python and Django Store API Example
+# A Python and Django API Store Example
 
 ## Development Installation and Deployment to Docker Swarm
 
@@ -44,27 +44,34 @@ docker stack deploy -c <(docker-compose -f docker-compose-swarm.yml config) stor
 
 ```
 
+
+### Running lint based on Google Style Guide
+```bash
+# install pylint
+pip install pylint
+
+# run lint on project
+find . -name "*.py" -and -not -name "0*.py" | xargs pylint
+```
+
+
 ### API Authentication
 ```bash
 
 # Login request
-
 curl --location --request POST '{{ api_endpoint }}/login' \
 --form 'email=admin@admin.com' \
 --form 'password=admin'
 
 # Login response
-
 {
     "token": "received token jwt"
 }
 
 # Make authenticated requests
-
 curl --location --request GET '{{ endpoint }}/users' \
 --header 'Authorization: JWT {{ token }}' \
 --header 'Content-Type: application/json'
-
 
 ```
 
@@ -79,7 +86,6 @@ curl --location --request GET '{{ endpoint }}/users' \
 All API Store features
 
 ### User
-- [x] List 
 - [x] List (filter, search, ordering)
 - [x] Read 
 - [x] Create 
@@ -94,7 +100,6 @@ All API Store features
 - [x] Docs
 
 ### Client's Profile
-- [x] List 
 - [x] List (filter, search, ordering)
 - [x] Read 
 - [x] Create (sign up)
@@ -103,7 +108,6 @@ All API Store features
 - [x] Docs
 
 ### Client's Address
-- [x] List 
 - [x] List (filter, search, ordering)
 - [x] Read 
 - [x] Create 
@@ -113,7 +117,6 @@ All API Store features
 - [x] Docs
 
 ### Product's Brand
-- [x] List 
 - [x] List (filter, search, ordering)
 - [x] Read 
 - [x] Create 
@@ -123,7 +126,6 @@ All API Store features
 - [x] Docs
 
 ### Product's Category
-- [x] List 
 - [x] List (filter, search, ordering)
 - [x] Read 
 - [x] Create 
@@ -147,11 +149,10 @@ All API Store features
 - [x] Create 
 - [x] Update 
 - [x] Delete (Soft)
-- [ ] Test
+- [x] Test
 - [x] Docs
 
 ### Order (Pedido)
-- [ ] List 
 - [ ] List (filter, search, ordering)
 - [ ] Read 
 - [ ] Create 
