@@ -5,7 +5,7 @@ from product.models.category import Category
 from product.models.brand import Brand
 from product.models.image import Image
 
-from core.utils.random_string import get_random_string
+from core.utils.random_string import get_random_hash
 
 
 class Product(models.Model):
@@ -105,7 +105,7 @@ class Product(models.Model):
         Generate the product's slug based on
         the product's name and random string
         """
-        self.slug = f"{get_random_string(6)}-{slugify(self.name)}"
+        self.slug = f"{get_random_hash()}-{slugify(self.name)}"
         super(Product, self).save(*args, **kwargs)
 
     def __str__(self):

@@ -189,7 +189,7 @@ EMAIL_PORT = config("EMAIL_PORT", cast=str)
 # sentry settings
 if DEBUG is False:
     sentry_sdk.init(
-        dsn=config("SENTRY_DNS", cast=str),
+        dsn=config("SENTRY_DNS", default="", cast=str),
         integrations=[DjangoIntegration()],
 
         # If you wish to associate users to errors (assuming you are using
