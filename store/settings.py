@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "account",
     "client",
     "product",
+    "order",
     # third part django packages
     "rest_framework",
     "rest_framework.authtoken",
